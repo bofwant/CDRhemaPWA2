@@ -15,7 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="generator" content="Polymer Starter Kit">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>My App</title>
+    <title>Cuaderno Devocional</title>
     <meta name="description" content="My App description">
 
     <!--
@@ -90,8 +90,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </script>
 
+    <!--  Loaf firebase stuff-->
+    <!-- update the version number as needed -->
+    <script defer src="bower_components/firebase/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="bower_components/firebase/firebase-auth.js"></script>
+    <script defer src="bower_components/firebase/firebase-database.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
     <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="bower_components/platinum-sw/platinum-sw-elements.html">
+    <link rel="import" href="bower_components/polymerfire/firebase-app.html">
 
     <!-- Load your application shell -->
     <link rel="import" href="src/my-app.html">
@@ -108,6 +118,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
   </head>
   <body>
+      <platinum-sw-register
+      auto-register
+      skip-waiting
+      clients-claim
+      reload-on-install
+      href="sw-import.js">
+      <platinum-sw-cache
+        default-cache-strategy="networkFirst">
+      </platinum-sw-cache>
+    </platinum-sw-register>
+  
+    <firebase-app
+      name="Cuaderno Devocional Rhema"
+      api-key="AIzaSyCQ1A8BvDlovtnZ3wqOcAq7BI5ywjhHJQg"
+      auth-domain="devocional-rhema-166721.firebaseapp.com"
+      database-url="https://devocional-rhema-166721.firebaseio.com">
+    </firebase-app>
+
     <my-app></my-app>
     <script>
       document.querySelector('my-app').attached();
