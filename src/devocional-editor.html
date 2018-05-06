@@ -15,7 +15,7 @@
 
 <link rel="import" href="devocional-card.html">
 <link rek="import" href="new-card.html">
-<link rel="import" href="my-view1.html">
+<link rel="import" href="devocional-header.html">
 <dom-module id="devocional-editor">
   <template>
     <style include="shared-styles">
@@ -83,7 +83,7 @@
 
 <paper-card id ="background-card" class="background-card" elevation="2" animated-shadow="false">
   <div class="card-content">
-
+	<devocional-header></devocional-header>
     <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}" is-editable="{{isEditable}}"></devocional-card>
     <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}" is-editable="{{isEditable}}"></devocional-card>
     <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}" is-editable="{{isEditable}}"></devocional-card>
