@@ -18,6 +18,7 @@ Code distributed by Google as part of the polymer project is also subject to an 
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
 <link rel="import" href="../bower_components/app-storage/app-network-status-behavior.html">
 <link rel="import" href="devocional-view.html">
 <link rel="lazy-import" href="notas-view.html">
@@ -114,10 +115,6 @@ app-header paper-icon-button {
 			<iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
 					<devocional-view name="devocional"></devocional-view>
 					<notas-view name="notas"></notas-view>
-					<my-view1 name="view1"></my-view1>
-					<my-view1></my-view1>
-					<my-view2 name="view2"></my-view2>
-					<my-view3 name="view3"></my-view3>
 					<my-view404 name="view404"></my-view404>
 				</iron-pages>
 			</app-header-layout>
@@ -182,7 +179,7 @@ app-header paper-icon-button {
 			/*================ appbar stuff========*/
 			computeLockIcon(signedIn) {
 				console.log("computing lock icon");
-				return signedIn ? 'lock-open' : 'lock';
+				return signedIn ? 'exit-to-app' : 'assignment-ind';
 			}
 			/*============network stuff===============*/
 			attached() {
@@ -204,8 +201,10 @@ app-header paper-icon-button {
 				this._setOnline(window.navigator.onLine);
 				if (window.navigator.onLine) {
 					console.debug("browser online");
+					this.signedIn=true;
 				} else {
 					console.debug("browser offline");
+					this.signedIn=false;
 				}
 			}
 			/*===========================================*/

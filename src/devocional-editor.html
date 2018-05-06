@@ -3,11 +3,15 @@
 
 
 <link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
-
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+
 
 <link rel="import" href="devocional-card.html">
 <link rek="import" href="new-card.html">
@@ -61,27 +65,55 @@
         align-self: center;
         display: flex;
       }
+      paper-fab {
+        background-color: var(--app-primary-color,red);
+        width: 80px;
+        height: 80px;
+            padding: 3px;
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+         --paper-fab-iron-icon: {
+            height: 48px;
+            width: 48px;
+             
+             };
+  }
     </style>
 
 <paper-card id ="background-card" class="background-card" elevation="2" animated-shadow="false">
   <div class="card-content">
 
-    <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}"></devocional-card>
-    <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}"></devocional-card>
-    <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}"></devocional-card>
-    <devocional-card id="aplicacionCard" header="Aplicacion Personal" text="{{aplicacion}}"></devocional-card>
-    <devocional-card id="textoCard" header="Texto Rhema" text="{{texto}}"></devocional-card>
+    <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}" is-editable="{{isEditable}}"></devocional-card>
+    <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}" is-editable="{{isEditable}}"></devocional-card>
+    <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}" is-editable="{{isEditable}}"></devocional-card>
+    <devocional-card id="aplicacionCard" header="Aplicacion Personal" text="{{aplicacion}}" is-editable="{{isEditable}}"></devocional-card>
+    <devocional-card id="textoCard" header="Texto Rhema" text="{{texto}}" is-editable="{{isEditable}}"></devocional-card>
   
   </div>
-  <div class="card-actions">
+  <div class="card-actions" hidden$="[[!isEditable]]">
     
-    <paper-button class="mainbutton" raised>Eliminar</paper-button>
-    <paper-button class="mainbutton" raised style="float: right;">Guardar</paper-button>
+    <paper-button class="mainbutton" raised>
+      
+      <iron-icon icon="delete"></iron-icon>
+      
+      Eliminar
+    </paper-button>
+    <paper-button class="mainbutton" raised style="float: right;" on-tap="save">
+        <iron-icon icon="save"></iron-icon>
+        Guardar
+      </paper-button>
     
     
     
   </div>
 </paper-card>
+    <paper-fab
+      icon="[[computEditIcon(isEditable)]]"
+      elevation="2"
+      on-tap="fabTap"
+      aria-label$="[[fablabel]]">
+      </paper-fab> 
 
 
 
@@ -93,7 +125,8 @@
         return {
           isEditable:{
             type:Boolean,
-            notify: true
+            notify: true,
+            value:false
           },
           mensaje:{
             type: String,
@@ -119,10 +152,34 @@
             type: String,
             notify:true,
             value:''
+          },
+          fablabel:{
+            type:String,
+            value:""
           }
           
         };
         }
+        computEditIcon(isEditable) {
+				console.log("computing lock icon");
+				return isEditable ? 'save' : 'editor:mode-edit';
+			}
+
+      fabTap(){
+        if(this.isEditable){
+          this.save();
+          this.fablabel="Editar";
+        }else{
+          this.edit();
+          this.fablabel="Guardar"
+        }
+      }
+      edit(){
+        this.isEditable=true;
+      }
+      save(){
+        this.isEditable=false;
+      }
     }
     window.customElements.define(DevocionalEditor.is,DevocionalEditor);  </script>
 </dom-module>
