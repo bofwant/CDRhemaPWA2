@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
     <title>Cuaderno Devocional</title>
-    <meta name="description" content="My App description">
+    <meta name="description" content="Cuaderno Devocional Rhema Internacional">
 
     <!--
       The `<base>` tag below is present to support two advanced deployment options:
@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="icon" href="images/favicon.ico">
 
     <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
 
     <!-- See https://goo.gl/qRE0vM -->
     <meta name="theme-color" content="#ffb300">
@@ -99,8 +99,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- initialize the SDK after all desired features are loaded -->
 
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
-    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="bower_components/platinum-sw/platinum-sw-elements.html">
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js">
+    </script>
     <link rel="import" href="bower_components/polymerfire/firebase-app.html">
 
     <!-- Load your application shell -->
@@ -118,16 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
   </head>
   <body>
-      <platinum-sw-register
-      auto-register
-      skip-waiting
-      clients-claim
-      reload-on-install
-      href="sw-import.js">
-      <platinum-sw-cache
-        default-cache-strategy="networkFirst">
-      </platinum-sw-cache>
-    </platinum-sw-register>
+      
   
     <firebase-app
       name="Cuaderno Devocional Rhema"
