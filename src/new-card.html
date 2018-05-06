@@ -3,16 +3,18 @@
 
 
 <link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+
+<link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
-<link rel="import" href="devocional-card.html">
-<link rek="import" href="new-card.html">
-<link rel="import" href="my-view1.html">
-<dom-module id="devocional-editor">
+<dom-module id="new-card">
   <template>
     <style include="shared-styles">
       :host{
@@ -66,7 +68,7 @@
 <paper-card id ="background-card" class="background-card" elevation="2" animated-shadow="false">
   <div class="card-content">
 
-    <devocional-card></devocional-card>
+    <new-card></new-card>
 
     <paper-card id="mensaje" class="main-card" elevation="0" animated-shadow="true">
     <div class="card-header">
@@ -154,8 +156,8 @@
 
   </template>
   <script>
-    class DevocionalEditor extends Polymer.Element{
-      static get is() { return 'devocional-editor';}
+    class newCard extends Polymer.Element{
+      static get is() { return 'new-card';}
       static get properties(){
         return {
           isEditable:{
@@ -166,5 +168,5 @@
         };
         }
     }
-    window.customElements.define(DevocionalEditor.is,DevocionalEditor);  </script>
+    window.customElements.define(newCard.is,newCard);  </script>
 </dom-module>

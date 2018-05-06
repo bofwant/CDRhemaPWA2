@@ -1,0 +1,84 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="devocional-card">
+    <template>
+        <style>
+            paper-card{
+                border-radius: 5px;
+                margin: 10px;
+                margin-left: 4px;
+                margin-right: 4px;
+                padding: 8px;
+                display: block;
+                background-color:var(--app-primary-background-color,red);
+            }
+            .main-header{
+                background-color: var(--app-primary-color); 
+                margin-left: 20px; 
+                margin-right: 20px; 
+                border-radius: 10px;
+                text-align:center; 
+        
+            }
+            .main-header h1{
+                color: white; 
+                font-size :20px;
+            }
+            iron-autogrow-textarea{
+                border-radius: 5px;
+                border-color: var(--app-primary-color);
+                margin: auto;
+                width: 100%;
+                align-self: center;
+                display: flex;
+            }
+        </style>
+
+        <paper-card id="mensaje" elevation="0" animated-shadow="true">
+            <div class="card-header">
+                <div class = "main-header">
+                    <h1><strong>[[header]]</strong></h1>
+                </div>
+            </div> 
+        <div class="card-content">
+            <iron-autogrow-textarea id="mensajetext" rows="4" value="{{text}}">
+            </iron-autogrow-textarea>
+              
+        </div>
+      </paper-card>
+
+        
+    </template>
+    <script>
+            /** @polymerElement */
+            class DevocionalCard extends Polymer.Element{
+            static get is() { return 'devocional-card';}
+            static get properties(){
+                return {
+                 isEditable:{
+                    type:Boolean,
+                    notify: true
+                 },
+                header:{
+                    type:String,
+                    value:"Header"
+                },
+                text:{
+                    type:String,
+                    notify:true,
+                    value:"text"
+                },
+        };
+        }
+    }
+    window.customElements.define(DevocionalCard.is,DevocionalCard);
+        </script>
+
+</dom-module>
