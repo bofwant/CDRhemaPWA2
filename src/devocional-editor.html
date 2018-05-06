@@ -1,0 +1,23 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="devocional-editor">
+  <template>
+    <style>
+    </style>
+  </template>
+  <script>
+    class DevocionalEditor extends Polymer.Element{
+      static get is() { return 'devocional-editor';}
+      static get properties(){
+        return {
+          isEditable:{
+            type:Boolean,
+            notify: true
+          }
+          
+        };
+        }
+    }
+    window.customElements.define(DevocionalEditor.is,DevocionalEditor);  </script>
+</dom-module>
