@@ -66,78 +66,11 @@
 <paper-card id ="background-card" class="background-card" elevation="2" animated-shadow="false">
   <div class="card-content">
 
-    <devocional-card></devocional-card>
-
-    <paper-card id="mensaje" class="main-card" elevation="0" animated-shadow="true">
-    <div class="card-header">
-      <div class = "main-header">
-          <h1><strong>Mensaje de Dios para mi Hoy</strong></h1>
-      </div>
-    </div> 
-    <div class="card-content">
-          
-          <iron-autogrow-textarea id="mensajetext" rows="4">
-            <textarea></textarea>
-          </iron-autogrow-textarea>
-          
-    </div>
-  </paper-card>
-  <paper-card id="mensaje" class="main-card" elevation="0" animated-shadow="true">
-      <div class="card-header">
-        <div class = "main-header">
-            <h1><strong>Promesa de Dios para mi Hoy</strong></h1>
-        </div>
-      </div> 
-      <div class="card-content">
-            
-            <iron-autogrow-textarea id="mensajetext" rows="4">
-              <textarea></textarea>
-            </iron-autogrow-textarea>
-            
-      </div>
-    </paper-card>
-    <paper-card id="mensaje" class="main-card" elevation="0" animated-shadow="true">
-        <div class="card-header">
-          <div class = "main-header">
-              <h1><strong>Mandamiento a Obedecer</strong></h1>
-          </div>
-        </div> 
-        <div class="card-content">
-              
-              <iron-autogrow-textarea id="mensajetext" rows="4">
-                <textarea></textarea>
-              </iron-autogrow-textarea>
-              
-        </div>
-      </paper-card>
-      <paper-card id="mensaje" class="main-card" elevation="0" animated-shadow="true">
-          <div class="card-header">
-            <div class = "main-header">
-                <h1><strong>Aplicacion Personal</strong></h1>
-            </div>
-          </div> 
-          <div class="card-content">
-                
-                <iron-autogrow-textarea id="mensajetext" rows="4">
-                  <textarea></textarea>
-                </iron-autogrow-textarea>
-                
-          </div>
-        </paper-card>
-        <paper-card id="mensaje" class="main-card" elevation="0" animated-shadow="true">
-            <div class="card-header">
-              <div class = "main-header">
-                  <h1><strong>Texto Rhema</strong></h1>
-              </div>
-            </div> 
-            <div class="card-content">
-                  
-                  <iron-autogrow-textarea id="mensajetext" rows="4">
-                    <textarea></textarea>
-                  </iron-autogrow-textarea>
-                  
-            </div>
-          </paper-card>
+    <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}"></devocional-card>
+    <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}"></devocional-card>
+    <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}"></devocional-card>
+    <devocional-card id="aplicacionCard" header="Aplicacion Personal" text="{{aplicacion}}"></devocional-card>
+    <devocional-card id="textoCard" header="Texto Rhema" text="{{texto}}"></devocional-card>
   
   </div>
   <div class="card-actions">
@@ -161,6 +94,31 @@
           isEditable:{
             type:Boolean,
             notify: true
+          },
+          mensaje:{
+            type: String,
+            notify:true,
+            value:''
+          },
+          promesa:{
+            type: String,
+            notify:true,
+            value:''
+          },
+          mandamiento:{
+            type: String,
+            notify:true,
+            value:''
+          },
+          aplicacion:{
+            type: String,
+            notify:true,
+            value:''
+          },
+          texto:{
+            type: String,
+            notify:true,
+            value:''
           }
           
         };
