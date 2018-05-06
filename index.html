@@ -139,6 +139,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <my-app></my-app>
     <script>
       document.querySelector('my-app').attached();
+      if (!window.HTMLImports) {
+        HTMLImports={};
+    }
     </script>
     <noscript>
       Please enable JavaScript to view this website.
