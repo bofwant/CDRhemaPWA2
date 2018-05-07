@@ -27,7 +27,6 @@
   "resolutions": {
     "polymer": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
-    "iron-icons": "^2.1.1",
     "platinum-sw": "^2.1.0"
   },
   "devDependencies": {
