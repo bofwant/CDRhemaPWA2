@@ -83,7 +83,7 @@
 
 <paper-card id ="background-card" class="background-card" elevation="2" animated-shadow="false">
   <div class="card-content">
-	<devocional-header></devocional-header>
+	  <devocional-header date="[[date]]"></devocional-header>
     <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}" is-editable="{{isEditable}}"></devocional-card>
     <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}" is-editable="{{isEditable}}"></devocional-card>
     <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}" is-editable="{{isEditable}}"></devocional-card>
@@ -119,10 +119,18 @@
       static get is() { return 'devocional-editor';}
       static get properties(){
         return {
+          isNew:{
+            type:Boolean,
+            notify: true,
+            value:true},
           isEditable:{
             type:Boolean,
             notify: true,
             value:false
+          },
+          date:{
+            type:String,
+            notify:true
           },
           mensaje:{
             type: String,
@@ -160,7 +168,27 @@
 				//console.log("computing lock icon");
 				return isEditable ? 'save' : 'editor:mode-edit';
 			}
+      ready(){
+        super.ready();
+        if(this.isNew){
+          var today = new Date();
+          var dd = today.getDate();
+          var mm = today.getMonth()+1; //January is 0!
+          var yyyy = today.getFullYear();
 
+          if(dd<10) {
+              dd = '0'+dd
+          } 
+
+          if(mm<10) {
+              mm = '0'+mm
+          } 
+
+          this.date = mm + '/' + dd + '/' + yyyy;
+          console.log(this.date);
+        }
+
+      }
       fabTap(){
         if(this.isEditable){
           this.save();
