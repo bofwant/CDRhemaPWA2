@@ -17,6 +17,9 @@
 <dom-module id="devocional-header">
     <template>
         <style>
+            :host{
+                color:white;
+            }
             paper-card{
                 border-radius: 10px;
                 margin: 5px;
@@ -26,12 +29,26 @@
                 display: flex;
                 background-color:var(--app-primary-color,red);
             }
+            .dateStyle{
+                color: white;
+                font-size: 40px;
+                text-align:center; 
+            }
+            paper-dropdown-menu-light{
+                --paper-dropdown-menu-label: {
+                    color:#f5f5f5af;
+                };
+                --paper-dropdown-menu-input: {
+                    border-bottom: 2px dashed lavender;
+                    color: white;
+                };
+            }
             .main-header{
                 background-color: var(--app-primary-color); 
                 margin-left: 20px; 
                 margin-right: 20px; 
                 border-radius: 10px;
-                text-align:center; 
+                
         
             }
             .main-header h1{
@@ -57,9 +74,9 @@
         </iron-ajax>
 
         <paper-card id="header" elevation="1" animated-shadow="true">
-        <div class="card-content">
+        <div class="card-content" style="width: 100%;">
               
-                    <paper-dropdown-menu-light   label="Libro" >
+                    <paper-dropdown-menu-light  label="Libro" >
                             <paper-listbox id="libroPicker" slot="dropdown-content" class="dropdown-content" selected="{{selectedBook}}">
                                     <template is="dom-repeat" items="{{bibleajax}}">
                                             <paper-item >
@@ -70,7 +87,7 @@
                         </paper-dropdown-menu-light>  
                     
             
-            <paper-dropdown-menu-light  id="chapterPicker" label="Libro">
+            <paper-dropdown-menu-light  id="chapterPicker" label="Capitulo">
                     <paper-listbox slot="dropdown-content" class="dropdown-content" selected="{{selectedChapter}}" >
                             <template is="dom-repeat" items="{{chapterArray}}">
                                     <paper-item >
@@ -79,8 +96,11 @@
                                 </template>
                     </paper-listbox>
                 </paper-dropdown-menu-light>
+                <div class="dateStyle">[[date]]</div>
         </div>
+        
       </paper-card>
+      
 
         
     </template>
@@ -94,9 +114,9 @@
                         type:Boolean,
                         notify: true
                     },
-                    header:{
+                    date:{
                         type:String,
-                        value:"Header"
+                        value:"00/00/00"
                     },
                     text:{
                         type:String,
@@ -150,13 +170,14 @@
                 //console.log(JSON.stringify(bible));
             }
             setChapterArray(book){
+                book++;
                 console.log(book);
-                var chapter=this.bibleajax[book];
+                var chapter=this.bibleajax[book].capitulos;
                 var chapterArray=[];
-                for (var i = 1; i <= book; i++) { 
+                for (var i = 1; i <= chapter; i++) { 
                     chapterArray.push(i);
                 }
-                return chapterArray;
+                this.chapterArray=chapterArray;
             }
     }
     window.customElements.define(DevocionalHeader.is,DevocionalHeader);
