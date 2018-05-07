@@ -11,13 +11,13 @@
     <template>
         <style>
             paper-card{
-                border-radius: 5px;
-                margin: 10px;
-                margin-left: 4px;
-                margin-right: 4px;
-                padding: 8px;
-                display: block;
-                background-color:var(--app-primary-background-color,red);
+                border-radius: 10px;
+                margin: 5px;
+                margin-left: 2px;
+                margin-right: 2px;
+                padding: 4px;
+                display: flex;
+                background-color:var(--app-primary-color,red);
             }
             .main-header{
                 background-color: var(--app-primary-color); 
@@ -41,15 +41,9 @@
             }
         </style>
 
-        <paper-card id="mensaje" elevation="0" animated-shadow="true">
-            <div class="card-header">
-                <div class = "main-header">
-                    <h1><strong>[[header]]</strong></h1>
-                </div>
-            </div> 
+        <paper-card id="header" elevation="1" animated-shadow="true">
         <div class="card-content">
-            <iron-autogrow-textarea id="mensajetext" rows="4" value="{{text}}" readonly="[[!isEditable]]">
-            </iron-autogrow-textarea>
+           <!-- <paper-button>header</paper-button>-->
               
         </div>
       </paper-card>
@@ -75,7 +69,27 @@
                     notify:true,
                     value:"text"
                 },
+                bibleRoot:{
+                	book:{
+                	   type: String,
+                       notify:true,
+                       value: "book"
+                    },
+                    chapter:{
+                    	type: Number,
+                        notify:true,
+                        value:0
+                    }
+                },
+                bibleStruct: {
+                	type: Array,
+                    value: [ ]
+                },
         };
+        }
+        created(){
+        	super();
+            this.header="ready";
         }
     }
     window.customElements.define(DevocionalHeader.is,DevocionalHeader);
