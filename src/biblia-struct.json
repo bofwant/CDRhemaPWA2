@@ -1,5 +1,4 @@
-{
-      "bibliaStruct": [
+[
         {"libro":"Génesis","capitulos":51},
         {"libro":"Exodo","capitulos":40},
         {"libro":"Levítico","capitulos":27},
@@ -66,5 +65,4 @@
         {"libro":"3 Juan","capitulos":1},
         {"libro":"Judas","capitulos":1},
         {"libro":"Apocalipsis","capitulos":22}
-      ]
-  }
+]

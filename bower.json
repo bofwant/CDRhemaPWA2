@@ -20,7 +20,9 @@
     "platinum-sw": "^2.1.0",
     "platinum-elements": "^2.0.0",
     "paper-ui-elements": "PolymerElements/paper-ui-elements",
-    "paper-fab": "PolymerElements/paper-fab#^2.1.0"
+    "paper-fab": "PolymerElements/paper-fab#^2.1.0",
+    "web-animations-js": "^2.3.1",
+    "iron-ajax": "^2.1.3"
   },
   "resolutions": {
     "polymer": "^2.0.0",

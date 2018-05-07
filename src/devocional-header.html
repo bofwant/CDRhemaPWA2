@@ -2,10 +2,17 @@
 <link rel="import" href="shared-styles.html">
 
 <link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../bower_components/web-animations-js/web-animations-next.min.html"s>
 
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu-light.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
 
 <dom-module id="devocional-header">
     <template>
@@ -41,10 +48,37 @@
             }
         </style>
 
+        <iron-ajax 
+            auto 
+            url="src/biblia-struct.json" 
+            handle-as="json" 
+            last-response="{{bibleajax}}"
+            >
+        </iron-ajax>
+
         <paper-card id="header" elevation="1" animated-shadow="true">
         <div class="card-content">
-           <!-- <paper-button>header</paper-button>-->
               
+                    <paper-dropdown-menu-light   label="Libro" >
+                            <paper-listbox id="libroPicker" slot="dropdown-content" class="dropdown-content" selected="{{selectedBook}}">
+                                    <template is="dom-repeat" items="{{bibleajax}}">
+                                            <paper-item >
+                                                {{item.libro}}
+                                            </paper-item>
+                                        </template>
+                            </paper-listbox>
+                        </paper-dropdown-menu-light>  
+                    
+            
+            <paper-dropdown-menu-light  id="chapterPicker" label="Libro">
+                    <paper-listbox slot="dropdown-content" class="dropdown-content" selected="{{selectedChapter}}" >
+                            <template is="dom-repeat" items="{{chapterArray}}">
+                                    <paper-item >
+                                        {{item}}
+                                    </paper-item>
+                                </template>
+                    </paper-listbox>
+                </paper-dropdown-menu-light>
         </div>
       </paper-card>
 
@@ -56,41 +90,74 @@
             static get is() { return 'devocional-header';}
             static get properties(){
                 return {
-                 isEditable:{
-                    type:Boolean,
-                    notify: true
-                 },
-                header:{
-                    type:String,
-                    value:"Header"
-                },
-                text:{
-                    type:String,
-                    notify:true,
-                    value:"text"
-                },
-                bibleRoot:{
-                	book:{
-                	   type: String,
-                       notify:true,
-                       value: "book"
+                    isEditable:{
+                        type:Boolean,
+                        notify: true
                     },
-                    chapter:{
-                    	type: Number,
+                    header:{
+                        type:String,
+                        value:"Header"
+                    },
+                    text:{
+                        type:String,
                         notify:true,
-                        value:0
-                    }
-                },
-                bibleStruct: {
-                	type: Array,
-                    value: [ ]
-                },
-        };
-        }
-        created(){
-        	super();
-            this.header="ready";
-        }
+                        value:"text"
+                    },
+                    bibleRoot:{
+                        book:{
+                        type: String,
+                        notify:true,
+                        value: "book"
+                        },
+                        chapter:{
+                            type: Number,
+                            notify:true,
+                            value:0
+                        }
+                    },
+                    bibleStruct: {
+                        type: Array,
+                        value: [ ]
+                    },
+                    bibleajax:{
+                        type: Array,
+                        value: [ ]
+                    },
+                    chapterArray:{
+                        type:Array,
+                        value:[1,2]
+                    },
+                    selectedBook:{
+                        type:Number,
+                        notify:true
+                    },
+                    selectedChapter:{
+                        type:Number,
+                        notify:true
+                    },
+                };
+        
+            }
+            static get observers() { return ['loadedBibleStruct(bibleajax)','setChapterArray(selectedBook)']}
+            ready(){
+                super.ready();
+                this.header="ready";
+                /*var testLibro= {"libro":"Génesis","capitulos":51};
+                this.push('bibleStruct', testLibro);*/
+            }
+            loadedBibleStruct(bible){
+                //console.log("bible struct Loaded");
+                //console.log(JSON.stringify(bible));
+            }
+            setChapterArray(book){
+                console.log(book);
+                var chapter=this.bibleajax[book];
+                var chapterArray=[];
+                for (var i = 1; i <= book; i++) { 
+                    chapterArray.push(i);
+                }
+                return chapterArray;
+            }
     }
     window.customElements.define(DevocionalHeader.is,DevocionalHeader);
         </script>
