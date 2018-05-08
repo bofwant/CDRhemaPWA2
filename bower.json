@@ -23,7 +23,9 @@
     "paper-fab": "PolymerElements/paper-fab#^2.1.0",
     "web-animations-js": "^2.3.1",
     "iron-ajax": "^2.1.3",
-    "iron-collapse": "^2.2.1"
+    "iron-collapse": "^2.2.1",
+    "iron-list": "^2.0.14",
+    "isw-dialog": "iswPolymerElements/isw-dialog#^1.0.3"
   },
   "resolutions": {
     "polymer": "^2.0.0",
