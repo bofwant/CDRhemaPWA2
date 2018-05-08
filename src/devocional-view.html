@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower-components/iron-list/iron-list.html">
 
 
 <link rel="import" href="devocional-editor.html">
@@ -18,7 +19,7 @@
    <!-- <devocional-editor name="editor">
     </devocional-editor>-->
     
-    <devocional-item name="item">
+    <devocional-item name="item" >
     </devocional-item>
       <devocional-item name="item2">
     </devocional-item>
@@ -29,6 +30,9 @@
   <script>
     class DevocionalView extends Polymer.Element {
       static get is() { return 'devocional-view'; }
+      test(){
+          this.$.item2.isSelected=true;
+      }
     }
 
     window.customElements.define(DevocionalView.is, DevocionalView);
