@@ -1,0 +1,86 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="devocional-item">
+    <template>
+        <style>
+            paper-card{
+                border-radius: 5px;
+                margin: 10px;
+                margin-left: 4px;
+                margin-right: 4px;
+                padding: 20px;
+                display: block;
+                background-color:var(--app-primary-background-color,red);
+            }
+            .card-content {
+                background-color: var(--app-primary-color); 
+                border-radius: 10px;
+                text-align:center; 
+        
+            }
+            .main-header {
+                color: white; 
+                font-size :12px;
+            }
+            iron-autogrow-textarea{
+                border-radius: 5px;
+                border-color: var(--app-primary-color);
+                margin: auto;
+                width: 100%;
+                align-self: center;
+                display: flex;
+            }
+        </style>
+
+        <paper-card id="Background" elevation="1" animated-shadow="true" >
+            <div class="card-content" on-tap="testFunc" >
+                <div class="main-header">
+                    <h1 id="header"><strong>[[info]]</strong></h1>
+                </div>
+            </div> 
+            <iron-collapse id="more-info" style="width:100%;">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
+    </iron-collapse>
+        <div class="card-actions" style="margin-top:10px">
+              <paper-button>Leer</paper-button>
+        </div>
+      </paper-card>
+
+        
+    </template>
+    <script>
+            /** @polymerElement */
+            class DevocionalItem extends Polymer.Element{
+            static get is() { return 'devocional-item';}
+            static get properties(){
+                return {
+                 isEditable:{
+                    type:Boolean,
+                    notify: true
+                 },
+                info:{
+                    type:String,
+                    value:"05/04/2018  Deuteronomio 5"
+                },
+                text:{
+                    type:String,
+                    notify:true,
+                    value:"text"
+                },
+        };
+        }
+        testFunc(){
+          this.info= "hola";
+         }
+    }
+    window.customElements.define(DevocionalItem.is,DevocionalItem);
+        </script>
+
+</dom-module>
