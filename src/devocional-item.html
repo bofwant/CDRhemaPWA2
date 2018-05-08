@@ -42,7 +42,7 @@
         <paper-card id="Background" elevation="1" animated-shadow="true" >
             <div class="card-content" on-tap="showButtons" >
                 <div class="main-header">
-                    <h1 id="header"><strong>[[info]]</strong></h1>
+                    <h1 id="header"><strong>[[date]]  [[book]] [[chapter]]</strong></h1>
                 </div>
             </div> 
             <iron-collapse id="buttonContainer" style="width:100%;" opened="{{isSelected}}">
@@ -72,9 +72,17 @@
                     type:Boolean,
                     notify: true
                  },
-                info:{
+                date:{
                     type:String,
-                    value:"05/04/2018  Deuteronomio 5"
+                    value:"05/04/2018"
+                },
+                book:{
+                    type:String,
+                    value:"Deuteronomio"
+                },
+                chapter:{
+                    type:String,
+                    value:"5"
                 },
                 text:{
                     type:String,
