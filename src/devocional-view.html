@@ -3,6 +3,8 @@
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/isw-dialog/isw-dialog.html">
 <link rel="import" href="../bower_components/isw-dialog/isw-dialog-remote.html">
+<link rel="import" href="../bower_components/show-more/show-more.html">
+
 
 
 
@@ -22,19 +24,12 @@
 
    <!-- <devocional-editor name="editor">
     </devocional-editor>-->
-    <iron-list items="[[devocionalItems]]" >
+    <dom-repeat items="[[devocionalItems]]" >
         <template>
-        	<div>
-        	  <devocional-item date="[[item.date]]">
+        	  <devocional-item date="[[item.date]]" book="[[item.book]]" chapter="[[item.chapter]]">
               </devocional-item>
-              </div>
           </template>
-      </iron-list>
-        	
-    <devocional-item name="item" >
-    </devocional-item>
-      <devocional-item name="item2">
-    </devocional-item>
+      </dom-repeat>
     
     
   </template>
@@ -44,7 +39,7 @@
       static get is() { return 'devocional-view'; }
       ready(){
       	super.ready();
-          this.devocionalItems = [{"date":"hola1"},{"date":"hola2"}];
+          this.devocionalItems = [{"date":"01/04/2017"},{"date":"10/05/2018", "book":"S.Juan","chapter":"2"}];
       
       }
       test(){
