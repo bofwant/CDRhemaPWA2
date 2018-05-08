@@ -26,7 +26,7 @@
     </devocional-editor>-->
     <dom-repeat items="[[devocionalItems]]" >
         <template>
-        	  <devocional-item date="[[item.date]]" book="[[item.book]]" chapter="[[item.chapter]]">
+        	  <devocional-item id="{{item.index}}" date="[[item.date]]" book="[[item.book]]" chapter="[[item.chapter]]" is-selected="{{item.selected}}" on-selected="itemSelected">
               </devocional-item>
           </template>
       </dom-repeat>
@@ -37,13 +37,29 @@
   <script>
     class DevocionalView extends Polymer.Element {
       static get is() { return 'devocional-view'; }
+      static get properties(){
+                return {
+                 lastSelected:{
+                    type: Object
+                 },
+                 lastId:{
+                 	type:String
+                 },
+               
+        };
+        }
       ready(){
       	super.ready();
-          this.devocionalItems = [{"date":"01/04/2017"},{"date":"10/05/2018", "book":"S.Juan","chapter":"2"}];
+          this.devocionalItems = [{"date":"01/04/2017"},{"date":"10/05/2018", "book":"S.Juan","chapter":"2"},{"date":"test"}];
       
       }
-      test(){
-          this.$.item2.isSelected=true;
+      itemSelected(e){ 
+      	if(this.lastSelected !== e.model && this.lastSelected){
+      	  this.lastSelected.set('item.selected',false);
+            // this.lastSelected.set('item.date',"date");
+          }
+      	this.lastSelected = e.model;
+          
       }
     }
 

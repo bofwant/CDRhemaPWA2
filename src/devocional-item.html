@@ -95,7 +95,17 @@
         showButtons(){
           //this.info= "hola";
           //this.$.buttonContainer.toggle();
-          this.isSelected=!this.isSelected;
+          if(this.isSelected){
+             this.unselect();
+            }else{
+            	this.select();
+            }
+            const event = new CustomEvent('selected', { bubbles: true, composed: true, detail: this.isSelected });
+            this.dispatchEvent(event);
+          //this.isSelected=!this.isSelected;
+         }
+         select(){
+         	this.isSelected=true;
          }
          unselect(){ 
            this.isSelected=false;
