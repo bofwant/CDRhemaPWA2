@@ -2,6 +2,8 @@
 <link rel="import" href="shared-styles.html">
 
 <link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
@@ -29,28 +31,33 @@
                 color: white; 
                 font-size :12px;
             }
-            iron-autogrow-textarea{
+            paper-button {
                 border-radius: 5px;
-                border-color: var(--app-primary-color);
+                background-color: var(--app-primary-color);
                 margin: auto;
-                width: 100%;
-                align-self: center;
-                display: flex;
+                color:white;
             }
         </style>
 
         <paper-card id="Background" elevation="1" animated-shadow="true" >
-            <div class="card-content" on-tap="testFunc" >
+            <div class="card-content" on-tap="showButtons" >
                 <div class="main-header">
                     <h1 id="header"><strong>[[info]]</strong></h1>
                 </div>
             </div> 
-            <iron-collapse id="more-info" style="width:100%;">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
-    </iron-collapse>
-        <div class="card-actions" style="margin-top:10px">
-              <paper-button>Leer</paper-button>
-        </div>
+            <iron-collapse id="buttonContainer" style="width:100%;" opened="{{isSelected}}">
+              <div class="card-actions" style="margin-top:10px">
+                   <paper-button id="eliminar">
+                   	<iron-icon icon="delete" ></iron-icon> 
+                      Eliminar
+                   </paper-button>
+                 <paper-button id="leer" style="float:right;" on-tap="unselect">
+                   	<iron-icon icon="book" ></iron-icon> 
+                      Leer
+                   </paper-button> 
+               </div>
+             </iron-collapse>
+        
       </paper-card>
 
         
@@ -61,7 +68,7 @@
             static get is() { return 'devocional-item';}
             static get properties(){
                 return {
-                 isEditable:{
+                 isSelected:{
                     type:Boolean,
                     notify: true
                  },
@@ -76,9 +83,15 @@
                 },
         };
         }
-        testFunc(){
-          this.info= "hola";
+        showButtons(){
+          //this.info= "hola";
+          //this.$.buttonContainer.toggle();
+          this.isSelected=!this.isSelected;
          }
+         unselect(){ 
+           this.isSelected=false;
+         }
+         
     }
     window.customElements.define(DevocionalItem.is,DevocionalItem);
         </script>
