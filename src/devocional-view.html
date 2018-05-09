@@ -41,7 +41,7 @@
       <isw-dialog-remote
         id="dialogRemote"
         dialog="deleteDialog"
-        data="[[dataForDialog]]"
+        data="{{dataForDialog}}"
         on-iron-overlay-canceled="_canceled"
         on-iron-overlay-closed="_closed"
         on-iron-overlay-opened="_opened">
@@ -92,7 +92,7 @@
 					}
 
 			_closed( event ) {
-                                
+                                this.devocionalItems[e.target.data.index].date=this.dataForDialog.date;
 						console.log( "closed" );
                         
             console.log( event.target.data.index + " deleted");

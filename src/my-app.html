@@ -150,14 +150,14 @@ app-header paper-icon-button {
 			</app-header-layout>
 		</app-drawer-layout>
 		
-		<isw-dialog id="dialog" name="deleteDialog" data="{{_data}}" modal>
+		<isw-dialog id="dialog" name="deleteDialog" data="{{dialogData}}" modal>
 			<div class = "main-header">
 				<h1><strong>Eliminar pagina del Dia: </strong></h1>
 				
 			</div>
-			<div class="dialog-date"><strong>[[_data.date]]</strong></div>
+			<div class="dialog-date"><strong>[[dialogData.date]]</strong></div>
 			<div class="buttons">
-				<paper-button class="dialog-button" style="float:left;" dialog-dismiss>Cancelar</paper-button>
+				<paper-button id="cancelDialog"      class="dialog-button" style="float:left;" on-tap="closeDialog" >Cancelar</paper-button>
 				<paper-button class="dialog-button" dialog-confirm>Acceptar</paper-button>
 			</div>
 		</isw-dialog>
@@ -217,6 +217,9 @@ app-header paper-icon-button {
 						reflectToAttribute: true,
 						observer: '_pageChanged',
 					},
+					dialogData:{
+						type:Object
+						},
 					routeData: Object,
 					subroute: Object, // This shouldn't be neccessary, but the Analyzer isn't picking up
 					// Polymer.Element#rootPath
@@ -276,6 +279,12 @@ app-header paper-icon-button {
 			}
 			_showPage404() {
 				this.page = 'view404';
+			}
+			closeDialog(e){
+				this.dialogData.canceled = true;
+				this.dialogData.date="hola";
+			   // this.$.dialog.close();
+				
 			}
 			
 			constructor() {
