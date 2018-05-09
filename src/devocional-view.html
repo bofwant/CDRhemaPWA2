@@ -60,12 +60,18 @@
                  lastId:{
                  	type:String
                  },
+                 devocionalItems:{
+                    type: Array,
+                    value:[{date:"01/04/2017"},{date:"10/05/2018", book:"S.Juan",chapter:"2"},{date:"test"},{date:"10/05/2018", book:"S.Juan",chapter:"2"}]
+                    }
+                 
+                 
                
         };
         }
       ready(){
       	super.ready();
-          this.devocionalItems = [{"date":"01/04/2017"},{"date":"10/05/2018", "book":"S.Juan","chapter":"2"},{"date":"test"},{"date":"10/05/2018", "book":"S.Juan","chapter":"2"}];
+          
       
       }
       itemSelected(e){ 
@@ -92,10 +98,21 @@
 					}
 
 			_closed( event ) {
-                                this.devocionalItems[e.target.data.index].date=this.dataForDialog.date;
+            console.debug("canceled "+ event.target.data.canceled);
+            if(event.target.data.canceled){
+              console.debug("canceled ")
+
+            }else{
+              var index=event.target.data.index
+            var item=this.devocionalItems[index];
+            item.date="aaaa";
+            this.splice('devocionalItems', index, 1,{date:item.date,book:item.book,chapter:item.chapter});
 						console.log( "closed" );
+            console.log(this.devocionalItems[index]);
                         
             console.log( event.target.data.index + " deleted");
+            }
+            
                        
 					}
 

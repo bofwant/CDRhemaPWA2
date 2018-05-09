@@ -155,7 +155,7 @@ app-header paper-icon-button {
 				<h1><strong>Eliminar pagina del Dia: </strong></h1>
 				
 			</div>
-			<div class="dialog-date"><strong>[[dialogData.date]]</strong></div>
+			<div class="dialog-date"><strong>{{dialogData.date}}</strong></div>
 			<div class="buttons">
 				<paper-button id="cancelDialog"      class="dialog-button" style="float:left;" on-tap="closeDialog" >Cancelar</paper-button>
 				<paper-button class="dialog-button" dialog-confirm>Acceptar</paper-button>
@@ -218,7 +218,8 @@ app-header paper-icon-button {
 						observer: '_pageChanged',
 					},
 					dialogData:{
-						type:Object
+						type:Object,
+						notify:true
 						},
 					routeData: Object,
 					subroute: Object, // This shouldn't be neccessary, but the Analyzer isn't picking up
@@ -282,8 +283,8 @@ app-header paper-icon-button {
 			}
 			closeDialog(e){
 				this.dialogData.canceled = true;
-				this.dialogData.date="hola";
-			   // this.$.dialog.close();
+				//console.log(this.dialogData.date);
+			   this.$.dialog.close();
 				
 			}
 			
