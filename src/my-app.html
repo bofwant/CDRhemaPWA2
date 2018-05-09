@@ -118,6 +118,12 @@ app-header paper-icon-button {
 	</app-location>
 	<app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
 	</app-route>
+	<firebase-auth
+            id="auth"
+            app-name="Cuaderno Devocional Rhema"
+            provider="google"
+            signed-in="{{signedIn}}"
+            user="{{user}}">
 	<app-drawer-layout fullbleed narrow="{{narrow}}">
 		<!-- Drawer content -->
 		<app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
@@ -207,6 +213,9 @@ app-header paper-icon-button {
 						type: Boolean,
 						notify: true,
 						value: false
+					},
+					user:{
+						type:Object
 					}, 
           barTitle:{
             type: String,

@@ -4,7 +4,11 @@
 <link rel="import" href="../bower_components/isw-dialog/isw-dialog.html">
 <link rel="import" href="../bower_components/isw-dialog/isw-dialog-remote.html">
 <link rel="import" href="../bower_components/show-more/show-more.html">
+<link rel="import" href="../bower_components/show-more/show-more.html">
 
+<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 
 
 
@@ -103,15 +107,15 @@
               console.debug("canceled ")
 
             }else{
-              var index=event.target.data.index
-            var item=this.devocionalItems[index];
-            item.date="aaaa";
-            this.splice('devocionalItems', index, 1,{date:item.date,book:item.book,chapter:item.chapter});
-						console.log( "closed" );
-            console.log(this.devocionalItems[index]);
-                        
-            console.log( event.target.data.index + " deleted");
-            }
+              var index=event.target.data.index;
+              var item=this.devocionalItems[index];
+              item.date="aaaa";
+              this.splice('devocionalItems', index, 1,{date:item.date,book:item.book,chapter:item.chapter});
+              console.log( "closed" );
+              console.log(this.devocionalItems[index]);
+                          
+              console.log( event.target.data.index + " deleted");
+              }
             
                        
 					}
