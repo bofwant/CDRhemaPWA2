@@ -26,12 +26,27 @@
     </devocional-editor>-->
     <dom-repeat items="[[devocionalItems]]" >
         <template>
-        	  <devocional-item id="{{item.index}}" date="[[item.date]]" book="[[item.book]]" chapter="[[item.chapter]]" is-selected="{{item.selected}}" on-selected="itemSelected">
+            <devocional-item id="{{item.index}}" 
+            index="{{item.index}}" 
+            date="[[item.date]]" 
+            book="[[item.book]]" 
+            chapter="[[item.chapter]]" 
+            is-selected="{{item.selected}}" 
+            on-selected="itemSelected" 
+            on-delete="deleteItem">
               </devocional-item>
           </template>
       </dom-repeat>
     
-    
+      <isw-dialog-remote
+        id="dialogRemote"
+        dialog="deleteDialog"
+        data="[[dataForDialog]]"
+        on-iron-overlay-canceled="_canceled"
+        on-iron-overlay-closed="_closed"
+        on-iron-overlay-opened="_opened">
+      </isw-dialog-remote>
+      
   </template>
 
   <script>
@@ -50,7 +65,7 @@
         }
       ready(){
       	super.ready();
-          this.devocionalItems = [{"date":"01/04/2017"},{"date":"10/05/2018", "book":"S.Juan","chapter":"2"},{"date":"test"}];
+          this.devocionalItems = [{"date":"01/04/2017"},{"date":"10/05/2018", "book":"S.Juan","chapter":"2"},{"date":"test"},{"date":"10/05/2018", "book":"S.Juan","chapter":"2"}];
       
       }
       itemSelected(e){ 
@@ -59,8 +74,34 @@
             // this.lastSelected.set('item.date',"date");
           }
       	this.lastSelected = e.model;
-          
       }
+      deleteItem(e){
+          console.log("view delete "+e.target.date +"index"+e.model.index);
+          console.log( "opening remote" );
+          this.dataForDialog={"date":e.target.date,"index":e.model.index};
+				this.$.dialogRemote.open();
+      }
+      openRemote() {
+				console.log( "opening remote" );
+                this.dataForDialog={"date":this.date,"index":this.index};
+				this.$.dialogRemote.open();
+			}
+			
+      _canceled( event ) {
+						console.log( "canceled");
+					}
+
+			_closed( event ) {
+                                
+						console.log( "closed" );
+                        
+            console.log( event.target.data.index + " deleted");
+                       
+					}
+
+					_opened( event ) {
+						//console.log( "opened" );
+                        }
     }
 
     window.customElements.define(DevocionalView.is, DevocionalView);

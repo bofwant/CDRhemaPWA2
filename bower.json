@@ -26,7 +26,8 @@
     "iron-collapse": "^2.2.1",
     "iron-list": "^2.0.14",
     "isw-dialog": "iswPolymerElements/isw-dialog#^1.0.3",
-    "show-more": "PolymerLabs/show-more"
+    "show-more": "PolymerLabs/show-more",
+    "paper-dialog": "^2.1.1"
   },
   "resolutions": {
     "polymer": "^2.0.0",

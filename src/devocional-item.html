@@ -10,6 +10,8 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
+<link rel="import" href="../bower_components/isw-dialog/isw-dialog-remote.html">
+
 <dom-module id="devocional-item">
     <template>
         <style>
@@ -48,8 +50,8 @@
             </div> 
             <iron-collapse id="buttonContainer" style="width:100%;" opened="{{isSelected}}">
               <div class="card-actions" style="margin-top:10px">
-                   <paper-button id="eliminar" >
-                   	<iron-icon icon="delete" ></iron-icon> 
+                   <paper-button id="eliminar" on-tap="delete">
+                   	<iron-icon icon="delete"  ></iron-icon> 
                       Eliminar
                    </paper-button>
                  <paper-button id="leer" style="float:right;" on-tap="unselect">
@@ -61,7 +63,7 @@
         
       </paper-card>
 
-        
+    
     </template>
     <script>
             /** @polymerElement */
@@ -73,6 +75,10 @@
                     type:Boolean,
                     notify: true
                  },
+                 index:{
+                    type:Number,
+                    value:0
+                },
                 date:{
                     type:String,
                     value:"05/04/2018"
@@ -109,6 +115,11 @@
          }
          unselect(){ 
            this.isSelected=false;
+         }
+         delete(){
+             console.log("delete "+ this.date );
+             const event = new CustomEvent('delete', { bubbles: true, composed: true});
+             this.dispatchEvent(event);
          }
          
     }
