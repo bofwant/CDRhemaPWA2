@@ -45,7 +45,7 @@
         <paper-card id="Background" elevation="1" animated-shadow="true" >
             <div class="card-content" on-tap="showButtons" >
                 <div class="main-header">
-                    <h1 id="header"><strong>[[date]]  [[book]] [[chapter]]</strong></h1>
+                    <h1 id="header"><strong>[[date]]  [[computeBook(book)]] [[chapter]]</strong></h1>
                 </div>
             </div> 
             <iron-collapse id="buttonContainer" style="width:100%;" opened="{{isSelected}}">
@@ -84,8 +84,8 @@
                     value:"05/04/2018"
                 },
                 book:{
-                    type:String,
-                    value:"Deuteronomio"
+                    type:Number,
+                    value:0
                 },
                 chapter:{
                     type:String,
@@ -96,6 +96,10 @@
                     notify:true,
                     value:"text"
                 },
+                bibleStruct:{
+                    type:Array,
+                    value:[]
+                }
         };
         }
         showButtons(){
@@ -121,6 +125,11 @@
              const event = new CustomEvent('delete', { bubbles: true, composed: true});
              this.dispatchEvent(event);
          }
+         computeBook(book){
+            return this.bibleStruct[book].libro;
+          
+        }
+         
          
     }
     window.customElements.define(DevocionalItem.is,DevocionalItem);

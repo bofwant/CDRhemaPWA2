@@ -25,16 +25,42 @@
         padding: 10px;
       }
     </style>
+    <iron-ajax 
+        auto 
+        url="src/biblia-struct.json" 
+        handle-as="json" 
+        last-response="{{bibleajax}}"
+        >
+      </iron-ajax>
+      <firebase-document
+            id="document"
+            app-name="Cuaderno Devocional Rhema"
+            path="[[editabledevocionalId]]"
+            data="{{editableDevocional}}">
+      </firebase-document>
+      <firebase-query
+         id="query"
+         app-name="Cuaderno Devocional Rhema"
+         path="/devocional/[[user.uid]]/cuadernoDevocional"
+         data="{{devocionalItems}}">
+      </firebase-query>   
+        <app-indexeddb-mirror
+          session="[[user.uid]]"
+          key="notes"
+          data="{{devocionalItems}}"
+          persisted-data="{{persistedDevocionalItems}}">
+        </app-indexeddb-mirror>  
 
    <!-- <devocional-editor name="editor">
     </devocional-editor>-->
-    <dom-repeat items="[[devocionalItems]]" >
+    <dom-repeat items$="{{_descending(persistedDevocionalItems)}}" >
         <template>
             <devocional-item id="{{item.index}}" 
             index="{{item.index}}" 
-            date="[[item.date]]" 
-            book="[[item.book]]" 
-            chapter="[[item.chapter]]" 
+            date="[[item.year]]" 
+            book="[[item.libro]]" 
+            bible-struct="[[bibleajax]]"
+            chapter="[[item.capitulo]]" 
             is-selected="{{item.selected}}" 
             on-selected="itemSelected" 
             on-delete="deleteItem">
@@ -58,26 +84,30 @@
       static get is() { return 'devocional-view'; }
       static get properties(){
                 return {
-                 lastSelected:{
-                    type: Object
-                 },
-                 lastId:{
-                 	type:String
-                 },
-                 devocionalItems:{
-                    type: Array,
-                    value:[{date:"01/04/2017"},{date:"10/05/2018", book:"S.Juan",chapter:"2"},{date:"test"},{date:"10/05/2018", book:"S.Juan",chapter:"2"}]
-                    }
-                 
-                 
-               
-        };
+                  lastSelected:{
+                      type: Object
+                  },
+                  lastId:{
+                    type:String
+                  },
+                  devocionalItems:{
+                      type: Array,
+                      value:[{date:"01/04/2017"},{date:"10/05/2018", book:"S.Juan",chapter:"2"},{date:"test"},{date:"10/05/2018", book:"S.Juan",chapter:"2"}]
+                  },
+                  user:{
+                    type:Object
+                  },
+                  persistedDevocionalItems:{
+                    type:Array,
+                    value:[]
+                  }       
+          };
         }
       ready(){
       	super.ready();
-          
-      
+
       }
+      
       itemSelected(e){ 
       	if(this.lastSelected !== e.model && this.lastSelected){
       	  this.lastSelected.set('item.selected',false);
@@ -123,6 +153,9 @@
 					_opened( event ) {
 						//console.log( "opened" );
                         }
+           _descending(data) {
+            return data.reverse();
+          }
     }
 
     window.customElements.define(DevocionalView.is, DevocionalView);

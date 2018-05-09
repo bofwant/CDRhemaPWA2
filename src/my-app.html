@@ -147,11 +147,11 @@ app-header paper-icon-button {
 					<div main-title style="text-align:center"><strong>Cuaderno Devocional rhema</strong></div>
 					<iron-icon icon="cloud" hidden$="[[!online]]"></iron-icon>
 					<iron-icon icon="cloud-off" hidden$="[[online]]"></iron-icon>
-					<paper-icon-button icon="[[computeLockIcon(signedIn)]]" disabled="[[!signedIn]]" on-tap="lock"></paper-icon-button>
+					<paper-icon-button icon="[[computeLockIcon(signedIn)]]" disabled="[[!signedIn]]" on-tap="signOut"></paper-icon-button>
 				</app-toolbar>
 			</app-header>
 			<iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-					<devocional-view name="devocional"></devocional-view>
+					<devocional-view user="[[user]]" name="devocional"></devocional-view>
 					<notas-view name="notas"></notas-view>
 					<my-view404 name="view404"></my-view404>
 				</iron-pages>
@@ -309,6 +309,9 @@ app-header paper-icon-button {
 				
 				});
         	}
+			signOut() {
+        		this.$.auth.signOut();
+      		}
 			
 			constructor() {
 				super(); // attached();
