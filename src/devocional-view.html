@@ -78,10 +78,8 @@
         <template>
             <devocional-item id="{{item.index}}" 
             index="{{item.index}}" 
-            date="[[item.year]]" 
-            book="[[item.libro]]" 
+            item="[[item]]" 
             bible-struct="[[bibleajax]]"
-            chapter="[[item.capitulo]]" 
             is-selected="{{item.selected}}" 
             on-selected="itemSelected" 
             on-delete="deleteItem">

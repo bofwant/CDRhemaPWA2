@@ -45,7 +45,7 @@
         <paper-card id="Background" elevation="1" animated-shadow="true" >
             <div class="card-content" on-tap="showButtons" >
                 <div class="main-header">
-                    <h1 id="header"><strong>[[date]]  [[computeBook(book)]] [[chapter]]</strong></h1>
+                    <h1 id="header"><strong>[[getDate(item)]]  [[computeBook(item)]] [[item.capitulo]]</strong></h1>
                 </div>
             </div> 
             <iron-collapse id="buttonContainer" style="width:100%;" opened="{{isSelected}}">
@@ -74,6 +74,20 @@
                  isSelected:{
                     type:Boolean,
                     notify: true
+                 },
+                 item:{
+                    type:Object,
+                    value:{
+                    aplicacion : "",
+                    capitulo : "",
+                    mandamiento : "",
+                    mensaje : "",
+                    month : "",
+                    promesa : "",
+                    rhema : "",
+                    year :""
+                    }
+
                  },
                  index:{
                     type:Number,
@@ -114,6 +128,15 @@
             this.dispatchEvent(event);
           //this.isSelected=!this.isSelected;
          }
+         getDate(item){
+             if(item.day){
+                this.date=item.day+"/"+item.month+"/"+item.year;
+                return this.date;
+             }else{
+                 return "";
+             }
+             
+         }
          select(){
          	this.isSelected=true;
          }
@@ -125,10 +148,10 @@
              const event = new CustomEvent('delete', { bubbles: true, composed: true});
              this.dispatchEvent(event);
          }
-         computeBook(book){
-             if(this.bibleStruct && book){
+         computeBook(item){
+             if(this.bibleStruct && item.libro){
                     
-            return this.bibleStruct[book].libro;
+            return this.bibleStruct[item.libro].libro;
              }else{
                  
             return "Cargando";
