@@ -24,6 +24,12 @@
 
         padding: 10px;
       }
+      paper-button {
+                border-radius: 5px;
+                background-color: var(--app-primary-color);
+                margin: auto;
+                color:white;
+            }
     </style>
     <iron-ajax 
         auto 
@@ -53,7 +59,22 @@
 
    <!-- <devocional-editor name="editor">
     </devocional-editor>-->
-    <dom-repeat items$="{{_descending(persistedDevocionalItems)}}" >
+    <!--<dom-repeat items$="{{_descending(persistedDevocionalItems)}}" >
+        <template>
+            <devocional-item id="{{item.index}}" 
+            index="{{item.index}}" 
+            date="[[item.year]]" 
+            book="[[item.libro]]" 
+            bible-struct="[[bibleajax]]"
+            chapter="[[item.capitulo]]" 
+            is-selected="{{item.selected}}" 
+            on-selected="itemSelected" 
+            on-delete="deleteItem">
+              </devocional-item>
+          </template>
+      </dom-repeat> -->
+
+      <dom-repeat id="listrepeat" items$="{{getPages(persistedDevocionalItems,selectedPage)}}" >
         <template>
             <devocional-item id="{{item.index}}" 
             index="{{item.index}}" 
@@ -67,6 +88,17 @@
               </devocional-item>
           </template>
       </dom-repeat>
+      <div style="margin-top:10px; display: flex;">
+        <paper-button id="back" disabled="[[canGoBack(devocionalPages)]]" on-tap="backPage">
+          <iron-icon icon="arrow-back" ></iron-icon> 
+        </paper-button>
+        <div style="color:#383838; 
+        text-align: center;
+        font-size: 20px;"><strong>{{selectedPageShow(selectedPage)}}</strong></div>
+      <paper-button id="leer" style="float:right;" disabled="[[canGoFoward(devocionalPages)]]" on-tap="nextPage">
+          <iron-icon icon="arrow-forward" ></iron-icon> 
+        </paper-button> 
+    </div>
     
       <isw-dialog-remote
         id="dialogRemote"
@@ -98,6 +130,14 @@
                     type:Object
                   },
                   persistedDevocionalItems:{
+                    type:Array,
+                    value:[]
+                  },
+                  selectedPage:{
+                    type:Number,
+                    value:0
+                  },
+                  devocionalPages:{
                     type:Array,
                     value:[]
                   }       
@@ -156,6 +196,51 @@
            _descending(data) {
             return data.reverse();
           }
+
+          splitArrayData(array){
+            var size = 30 // items per chunk 
+            var inputArray=array.slice();
+            
+            var myArray = [];
+              for(var i = 0; i < array.length; i += size) {
+                myArray.push(array.slice(i, i+size));
+              }
+            console.log(myArray);
+            //console.log(inputArray);
+            return myArray;
+          }
+          getPages(array,index){
+            var fixedArray=this._descending(array);
+            this.devocionalPages=this.splitArrayData(fixedArray);
+            
+            return this.devocionalPages[index];
+          }
+          
+          canGoFoward(){
+            var next=this.selectedPage+1;
+                if(next>this.devocionalPages.length){
+                  return true;
+                }else{
+                  return false;
+                }
+            }
+          canGoBack(){
+              var back=this.selectedPage-1;
+                if(back<0){
+                  return true;
+                }else{
+                  return false;
+                }
+            }
+            nextPage(){
+              this.selectedPage+=1;
+            }
+            backPage(){
+              this.selectedPage-=1;
+            }
+            selectedPageShow(page){
+              return page+1;
+            }
     }
 
     window.customElements.define(DevocionalView.is, DevocionalView);

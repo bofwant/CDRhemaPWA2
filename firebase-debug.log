@@ -1,0 +1,31 @@
+[debug] [2018-05-09T20:32:16.297Z] ----------------------------------------------------------------------
+[debug] [2018-05-09T20:32:16.300Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Daniel\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-05-09T20:32:16.300Z] CLI Version:   3.18.4
+[debug] [2018-05-09T20:32:16.300Z] Platform:      win32
+[debug] [2018-05-09T20:32:16.300Z] Node Version:  v8.11.1
+[debug] [2018-05-09T20:32:16.301Z] Time:          Wed May 09 2018 16:32:16 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-09T20:32:16.301Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-05-09T20:32:16.311Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-09T20:32:16.311Z] > authorizing via signed-in user
+[debug] [2018-05-09T20:32:16.313Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/devocional-rhema-166721  
+  
+ Wed May 09 2018 16:32:16 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-09T20:32:17.496Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-09T20:32:17.497Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/devocional-rhema-166721/tokens  
+  
+ Wed May 09 2018 16:32:17 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-09T20:32:18.346Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-09T20:32:18.349Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/devocional-rhema-166721  
+  
+ Wed May 09 2018 16:32:18 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-09T20:32:19.328Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'D:\RepositoriosGIT\CDRhemaPWA2\CDRhemaPWA2'...
+[info] 
+[debug] [2018-05-09T20:32:19.330Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/623224575199/clients/_:getWebAppConfig  
+  
+ Wed May 09 2018 16:32:19 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-09T20:32:20.254Z] <<< HTTP RESPONSE 200
+[info] +  hosting: Local server: http://localhost:5000
+

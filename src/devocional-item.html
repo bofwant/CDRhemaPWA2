@@ -126,7 +126,13 @@
              this.dispatchEvent(event);
          }
          computeBook(book){
+             if(this.bibleStruct && book){
+                    
             return this.bibleStruct[book].libro;
+             }else{
+                 
+            return "Cargando";
+             }
           
         }
          
