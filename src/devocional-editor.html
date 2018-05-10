@@ -196,10 +196,12 @@
             value:''
           },
           libro:{
-            type:Number
+            type:Number,
+            value:0
           },
           capitulo:{
-            type:Number
+            type:Number,
+            value:0
           },
           fablabel:{
             type:String,
@@ -240,6 +242,61 @@
         this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+this.editorItem.year+this.editorItem.month+this.editorItem.day;
         
       }
+      createItem(item){
+        var today = new Date();
+          var dd = today.getDate();
+          var mm = today.getMonth()+1; //January is 0!
+          var yyyy = today.getFullYear();
+
+          if(dd<10) {
+              dd = '0'+dd
+          } 
+
+          if(mm<10) {
+              mm = '0'+mm
+          } 
+
+          var date = dd + '/' + mm + '/' + yyyy;
+          
+          var day=item.day;
+        var month=item.month;
+        if(day<10) {
+          day = '0'+day;
+          } 
+
+          if(month<10) {
+            month = '0'+month;
+          }
+
+        this.set('editorItem',item);
+        this.date=day+"/"+month+"/"+item.year;
+        console.log(date);
+        console.log(this.date);
+        if(date!==this.date){
+          this.date=date;
+          this.editorItem.year=yyyy;
+        this.editorItem.month=mm;
+        this.editorItem.day=dd;
+          this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+ yyyy + mm + dd;
+        
+        }else{
+          this.editorItem.year=item.year;
+        this.editorItem.month=item.month;
+        this.editorItem.day=item.day;
+          this.libro=item.libro;
+        this.capitulo=item.capitulo;
+        this.mensaje=item.mensaje;
+        this.promesa=item.promesa;
+        this.mandamiento=item.mandamiento;
+        this.aplicacion=item.aplicacion;
+        this.rhema=item.rhema;
+        this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+item.year+month+day;
+        
+        }
+        
+      }
+
+
       ready(){
         super.ready();
         if(this.isNew){

@@ -33,6 +33,21 @@
                 margin: auto;
                 color:white;
             }
+            paper-fab {
+        background-color: var(--app-primary-color,red);
+        width: 80px;
+        height: 80px;
+            padding: 3px;
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            
+         --paper-fab-iron-icon: {
+            height: 48px;
+            width: 48px;
+             
+             };
+  }
     </style>
     <iron-ajax 
         auto 
@@ -101,10 +116,19 @@
             <iron-icon icon="arrow-forward" ></iron-icon> 
           </paper-button> 
         </div>
+        <paper-fab
+      icon="note-add"
+      elevation="2"
+      on-tap="createEditor">
+      </paper-fab>
       </div>
       <devocional-editor id="editor" hidden editor-item="{{editorItem}}" bibleajax="{{bibleajax}}" user="{{user}}">
 
       </devocional-editor>
+
+
+       
+
       <isw-dialog-remote
         id="dialogRemote"
         dialog="deleteDialog"
@@ -256,6 +280,14 @@
               const event = new CustomEvent('openeditor', { bubbles: true, composed: true});
              this.dispatchEvent(event);
               this.$.editor.setItem(e.target.item);
+              this.$.editor.hidden=false;
+              this.$.showlist.hidden=true;
+              
+            }
+            createEditor(e){
+              const event = new CustomEvent('openeditor', { bubbles: true, composed: true});
+             this.dispatchEvent(event);
+              this.$.editor.createItem(this.devocionalItems[0]);
               this.$.editor.hidden=false;
               this.$.showlist.hidden=true;
               
