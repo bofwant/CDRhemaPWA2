@@ -275,8 +275,8 @@
         if(date!==this.date){
           this.date=date;
           this.editorItem.year=yyyy;
-        this.editorItem.month=mm;
-        this.editorItem.day=dd;
+        this.editorItem.month=today.getMonth();
+        this.editorItem.day=today.getDate();
         this.libro=0;
         this.capitulo=1;
         this.mensaje="";
