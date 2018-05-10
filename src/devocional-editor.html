@@ -13,6 +13,8 @@
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 
 
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+
 <link rel="import" href="devocional-card.html">
 <link rek="import" href="new-card.html">
 <link rel="import" href="devocional-header.html">
@@ -98,6 +100,13 @@
              };
   }
     </style>
+
+<firebase-document
+    id="document"
+    app-name="Cuaderno Devocional Rhema"
+    path="[[editableDevocionalId]]"
+    data="{{editableDevocional}}">
+</firebase-document>
     
 <paper-card id ="background-card" class="background-card" elevation="2" animated-shadow="false">
   <div class="card-content">
@@ -197,9 +206,19 @@
             value:""
           },
           bibleajax:{
-                        type: Array,
-                        value: [ ]
-                    }
+            type: Array,
+            value: [ ]
+          },
+          editableDevocionalId:{
+            type:String,
+            value:"/test"
+          },
+          editableDevocional:{
+            type:Object
+          },
+          user:{
+            type:Object
+          }
           
         };
         }
@@ -208,16 +227,18 @@
 				return isEditable ? 'save' : 'editor:mode-edit';
 			}
       setItem(item){
-        this.date=item.day+"/"+item.month+"/"+item.year;
         this.set('editorItem',item);
-        this.libro=item.libro;
-        this.capitulo=item.capitulo;
-        this.mensaje=item.mensaje;
-        this.promesa=item.promesa;
-        this.mandamiento=item.mandamiento;
-        this.aplicacion=item.aplicacion;
-        this.rhema=item.rhema;
-
+        this.date=this.editorItem.day+"/"+this.editorItem.month+"/"+this.editorItem.year;
+        
+        this.libro=this.editorItem.libro;
+        this.capitulo=this.editorItem.capitulo;
+        this.mensaje=this.editorItem.mensaje;
+        this.promesa=this.editorItem.promesa;
+        this.mandamiento=this.editorItem.mandamiento;
+        this.aplicacion=this.editorItem.aplicacion;
+        this.rhema=this.editorItem.rhema;
+        this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+this.editorItem.year+this.editorItem.month+this.editorItem.day;
+        
       }
       ready(){
         super.ready();
@@ -254,6 +275,32 @@
       }
       save(){
         this.isEditable=false;
+        //this.editableDevocional=this.editorItem;
+        var day=this.editorItem.day;
+        var month=this.editorItem.month;
+        if(day<10) {
+          day = '0'+day;
+          } 
+
+          if(month<10) {
+            month = '0'+month;
+          }
+        var key=this.editorItem.year+month+day;
+        var path=this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional";
+        this.editableDevocionalId=path;
+        this.editableDevocional.mensaje=this.mensaje;
+        this.editableDevocional.promesa=this.promesa;
+        this.editableDevocional.mandamiento=this.mandamiento;
+        this.editableDevocional.aplicacion=this.aplicacion;
+        this.editableDevocional.rhema=this.rhema;
+        this.editableDevocional.libro=this.libro;
+        this.editableDevocional.capitulo=this.capitulo;
+        this.editableDevocional.year=this.editorItem.year;
+        this.editableDevocional.month=this.editorItem.month;
+        this.editableDevocional.day=this.editorItem.day;
+        //this.editableDevocional=this.editorItem;
+        console.log(this.editableDevocional);
+        this.$.document.saveValue(path,key);
       }
     }
     window.customElements.define(DevocionalEditor.is,DevocionalEditor);  </script>

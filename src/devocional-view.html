@@ -102,7 +102,7 @@
           </paper-button> 
         </div>
       </div>
-      <devocional-editor id="editor" hidden editor-item="{{editorItem}}" bibleajax="{{bibleajax}}">
+      <devocional-editor id="editor" hidden editor-item="{{editorItem}}" bibleajax="{{bibleajax}}" user="{{user}}">
 
       </devocional-editor>
       <isw-dialog-remote
@@ -261,6 +261,7 @@
               
             }
             closeEditor(){
+              this.$.editor.save();
               this.$.editor.hidden=true;
               this.$.showlist.hidden=false;
             }
