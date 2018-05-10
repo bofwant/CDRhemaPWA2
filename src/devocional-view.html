@@ -92,7 +92,7 @@
           </template>
       </dom-repeat> -->
       <div id="showlist" >
-        <dom-repeat id="listrepeat" items$="{{getPages(persistedDevocionalItems,selectedPage)}}" >
+        <dom-repeat id="listrepeat" items$="{{getPages(devocionalItems,selectedPage)}}" >
           <template>
               <devocional-item id="{{item.index}}" 
               index="{{item.index}}" 
@@ -293,9 +293,25 @@
               
             }
             closeEditor(){
-              this.$.editor.save();
+              var item=this.$.editor.save();
               this.$.editor.hidden=true;
               this.$.showlist.hidden=false;
+              var gg=-1;
+              for(var i = 0; i < this.devocionalItems.length; i++) {
+                if(item.day==this.devocionalItems[i].day && item.month==this.devocionalItems[i].month && item.year==this.devocionalItems[i].year){
+                    gg=i;
+                }
+              }
+              var inputArray=this.devocionalItems.slice();
+              if(gg==-1){
+                this.$.listrepeat.splice('items',0,0,item);
+              }
+              
+              var temp=this.selectedPage;
+              this.selectedPage++;
+              
+              setTimeout(this.backPage(), 200);
+              //setTimeout(this.$.listrepeat.render(), 300);
             }
     }
 

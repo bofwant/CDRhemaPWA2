@@ -277,6 +277,13 @@
           this.editorItem.year=yyyy;
         this.editorItem.month=mm;
         this.editorItem.day=dd;
+        this.libro=0;
+        this.capitulo=1;
+        this.mensaje="";
+        this.promesa="";
+        this.mandamiento="";
+        this.aplicacion="";
+        this.rhema="";
           this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+ yyyy + mm + dd;
         
         }else{
@@ -358,6 +365,7 @@
         //this.editableDevocional=this.editorItem;
         console.log(this.editableDevocional);
         this.$.document.saveValue(path,key);
+        return this.editableDevocional;
       }
     }
     window.customElements.define(DevocionalEditor.is,DevocionalEditor);  </script>
