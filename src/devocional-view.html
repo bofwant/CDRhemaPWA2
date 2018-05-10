@@ -56,14 +56,9 @@
         last-response="{{bibleajax}}"
         >
       </iron-ajax>
-      <firebase-document
-            id="document"
-            app-name="Cuaderno Devocional Rhema"
-            path="[[editabledevocionalId]]"
-            data="{{editableDevocional}}">
-      </firebase-document>
+     
       <firebase-query
-         id="query"
+         id="querybum"
          app-name="Cuaderno Devocional Rhema"
          path="/devocional/[[user.uid]]/cuadernoDevocional"
          data="{{devocionalItems}}">
@@ -75,24 +70,8 @@
           persisted-data="{{persistedDevocionalItems}}">
         </app-indexeddb-mirror>  
 
-   <!-- <devocional-editor name="editor">
-    </devocional-editor>-->
-    <!--<dom-repeat items$="{{_descending(persistedDevocionalItems)}}" >
-        <template>
-            <devocional-item id="{{item.index}}" 
-            index="{{item.index}}" 
-            date="[[item.year]]" 
-            book="[[item.libro]]" 
-            bible-struct="[[bibleajax]]"
-            chapter="[[item.capitulo]]" 
-            is-selected="{{item.selected}}" 
-            on-selected="itemSelected" 
-            on-delete="deleteItem">
-              </devocional-item>
-          </template>
-      </dom-repeat> -->
       <div id="showlist" >
-        <dom-repeat id="listrepeat" items$="{{getPages(devocionalItems,selectedPage)}}" >
+        <dom-repeat id="listrepeat" items$="{{getPages(persistedDevocionalItems,selectedPage)}}" >
           <template>
               <devocional-item id="{{item.index}}" 
               index="{{item.index}}" 
@@ -240,7 +219,7 @@
               for(var i = 0; i < array.length; i += size) {
                 myArray.push(array.slice(i, i+size));
               }
-            console.log(myArray);
+            //console.log(myArray);
             //console.log(inputArray);
             return myArray;
           }
@@ -294,23 +273,23 @@
             }
             closeEditor(){
               var item=this.$.editor.save();
+              console.log(this.devocionalItems[0].$key);
+              console.log(this.$.querybum.limitToFirst);
+              if(this.$.querybum.limitToFirst>0){
+                this.$.querybum.limitToFirst++;
+              }else{
+                this.$.querybum.limitToFirst=10000;
+              
+              }
+              
               this.$.editor.hidden=true;
               this.$.showlist.hidden=false;
-              var gg=-1;
-              for(var i = 0; i < this.devocionalItems.length; i++) {
-                if(item.day==this.devocionalItems[i].day && item.month==this.devocionalItems[i].month && item.year==this.devocionalItems[i].year){
-                    gg=i;
-                }
-              }
-              var inputArray=this.devocionalItems.slice();
-              if(gg==-1){
-                this.$.listrepeat.splice('items',0,0,item);
-              }
               
-              var temp=this.selectedPage;
-              this.selectedPage++;
               
-              setTimeout(this.backPage(), 200);
+              //var temp=this.selectedPage;
+              //this.selectedPage++;
+              
+              //setTimeout(this.backPage(), 200);
               //setTimeout(this.$.listrepeat.render(), 300);
             }
     }
