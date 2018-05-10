@@ -115,9 +115,9 @@ app-header paper-icon-button {
 						margin: 10px
 			}
 </style>
-	<app-location route="{{route}}" url-space-regex="^[[rootPath]]">
+	<app-location route="{{route}}" use-hash-as-path url-space-regex="^[[rootPath]]">
 	</app-location>
-	<app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
+	<app-route route="{{route}}"  pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
 	</app-route>
 	<firebase-auth
             id="auth"
@@ -134,8 +134,8 @@ app-header paper-icon-button {
         		<div main-title style="text-align:center"><strong>[[user.displayName]]</strong></div>
 			</app-toolbar>
 			<iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-				<a name="devocional" href="[[rootPath]]devocional">Devocional</a>
-				<a name="notas" href="[[rootPath]]notas">Notas</a>
+				<a name="devocional" href="[[rootPath]]#/devocional">Devocional</a>
+				<a name="notas" href="[[rootPath]]#/notas">Notas</a>
 			</iron-selector>
 		</app-drawer>
 		<!-- Main content -->
