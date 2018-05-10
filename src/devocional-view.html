@@ -73,9 +73,9 @@
       <div id="showlist" >
         <dom-repeat id="listrepeat" items$="{{getPages(persistedDevocionalItems,selectedPage)}}" >
           <template>
-              <devocional-item id="{{item.index}}" 
-              index="{{item.index}}" 
+              <devocional-item id="{{item.index}}"
               item="[[item]]" 
+              key="[[getKey(item)]]"
               bible-struct="[[bibleajax]]"
               is-selected="{{item.selected}}" 
               on-selected="itemSelected"
@@ -174,35 +174,38 @@
         console.log(e.target.item);
       }
       deleteItem(e){
-          console.log("view delete "+e.target.date +"index"+e.model.index);
+          console.log("view delete "+e.target.date +"key "+e.target.key);
           console.log( "opening remote" );
-          this.dataForDialog={"date":e.target.date,"index":e.model.index};
+          this.dataForDialog={"date":e.target.date,"key":e.target.key};
 				this.$.dialogRemote.open();
       }
-      openRemote() {
-				console.log( "opening remote" );
-                this.dataForDialog={"date":this.date,"index":this.index};
-				this.$.dialogRemote.open();
-			}
+      getKey(item){
+            var day=item.day;
+            var month=item.month;
+            if(day<10) {
+            day = '0'+day;
+            } 
+
+            if(month<10) {
+                month = '0'+month;
+            }
+            var key=item.year+month+day;
+            return key;
+         }
 			
       _canceled( event ) {
 						console.log( "canceled");
 					}
 
 			_closed( event ) {
-            console.debug("canceled "+ event.target.data.canceled);
+            console.debug("canceled "+ event.target.data.canceled + "key "+event.target.data.key);
             if(event.target.data.canceled){
               console.debug("canceled ")
 
             }else{
-              var index=event.target.data.index;
-              var item=this.devocionalItems[index];
-              item.date="aaaa";
-              this.splice('devocionalItems', index, 1,{date:item.date,book:item.book,chapter:item.chapter});
-              console.log( "closed" );
-              console.log(this.devocionalItems[index]);
-                          
-              console.log( event.target.data.index + " deleted");
+              this.$.querybum.ref.child(event.target.data.key).remove();
+              this.refreshQuery();
+              console.log( event.target.data.key + " deleted");
               }
             
                        
@@ -279,12 +282,7 @@
               var item=this.$.editor.save();
               console.log(this.devocionalItems[0].$key);
               console.log(this.$.querybum.limitToFirst);
-              if(this.$.querybum.limitToFirst>0){
-                this.$.querybum.limitToFirst++;
-              }else{
-                this.$.querybum.limitToFirst=10000;
-              
-              }
+              this.refreshQuery();
               
               this.$.editor.hidden=true;
               this.$.showlist.hidden=false;
@@ -295,6 +293,14 @@
               
               //setTimeout(this.backPage(), 200);
               //setTimeout(this.$.listrepeat.render(), 300);
+            }
+            refreshQuery(){
+              if(this.$.querybum.limitToFirst>0){
+                this.$.querybum.limitToFirst++;
+              }else{
+                this.$.querybum.limitToFirst=10000;
+              
+              }
             }
             _queryChanged(newValue, oldValue) {
               console.log(newValue);
