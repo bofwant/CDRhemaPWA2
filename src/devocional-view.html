@@ -253,9 +253,12 @@
               return page+1;
             }
             openEditor(e){
+              const event = new CustomEvent('openeditor', { bubbles: true, composed: true});
+             this.dispatchEvent(event);
               this.$.editor.setItem(e.target.item);
               this.$.editor.hidden=false;
               this.$.showlist.hidden=true;
+              
             }
             closeEditor(){
               this.$.editor.hidden=true;

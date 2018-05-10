@@ -143,7 +143,8 @@ app-header paper-icon-button {
 		<app-header-layout has-scrolling-region>
 			<app-header slot="header" condenses reveals effects="waterfall">
 				<app-toolbar>
-					<paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+					<paper-icon-button id="tdrwr" icon="my-icons:menu" drawer-toggle></paper-icon-button>
+					<paper-icon-button id="cledtr" icon="arrow-back" on-tap="closeEditor" hidden></paper-icon-button>
 					<div main-title style="text-align:center"><strong>Cuaderno Devocional rhema</strong></div>
 					<iron-icon icon="cloud" hidden$="[[!online]]"></iron-icon>
 					<iron-icon icon="cloud-off" hidden$="[[online]]"></iron-icon>
@@ -151,7 +152,7 @@ app-header paper-icon-button {
 				</app-toolbar>
 			</app-header>
 			<iron-pages id="ironpage" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-					<devocional-view user="[[user]]" name="devocional"></devocional-view>
+					<devocional-view id="deview" user="[[user]]" name="devocional" on-openeditor="editorOpened"></devocional-view>
 					<notas-view name="notas"></notas-view>
 					<my-view404 name="view404"></my-view404>
 				</iron-pages>
@@ -242,6 +243,15 @@ app-header paper-icon-button {
 					// Polymer.Element#rootPath
 					rootPath: String,
 				};
+			}
+			editorOpened(){
+				this.$.cledtr.hidden=false;
+				this.$.tdrwr.hidden=true;
+			}
+			closeEditor(){
+				this.$.cledtr.hidden=true;
+				this.$.tdrwr.hidden=false;
+				this.$.deview.closeEditor();
 			}
 			/*================ appbar stuff========*/
 			computeLockIcon(signedIn) {
