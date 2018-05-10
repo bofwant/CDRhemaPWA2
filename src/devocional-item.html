@@ -54,7 +54,7 @@
                    	<iron-icon icon="delete"  ></iron-icon> 
                       Eliminar
                    </paper-button>
-                 <paper-button id="leer" style="float:right;" on-tap="unselect">
+                 <paper-button id="leer" style="float:right;" on-tap="openEditor">
                    	<iron-icon icon="book" ></iron-icon> 
                       Leer
                    </paper-button> 
@@ -127,6 +127,10 @@
             const event = new CustomEvent('selected', { bubbles: true, composed: true, detail: this.isSelected });
             this.dispatchEvent(event);
           //this.isSelected=!this.isSelected;
+         }
+         openEditor(){
+            const event = new CustomEvent('openeditor', { bubbles: true, composed: true, detail: this.isSelected });
+            this.dispatchEvent(event);
          }
          getDate(item){
              if(item.day){

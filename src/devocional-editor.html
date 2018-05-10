@@ -22,6 +22,9 @@
       :host{
         display: block;
       }
+      :host([hidden]), [hidden] {
+        display: none !important;
+      }
       .mainbutton{
         
         color: white;
@@ -65,6 +68,20 @@
         align-self: center;
         display: flex;
       }
+      .close{
+        background-color: var(--app-primary-color,red);
+        width: 40px;
+        height: 40px;
+            padding: 3px;
+            position: fixed;
+            float:left;
+            margin-left: auto;
+         --paper-fab-iron-icon: {
+            height: 24px;
+            width: 24px;
+             
+             };
+      }
       paper-fab {
         background-color: var(--app-primary-color,red);
         width: 80px;
@@ -73,6 +90,7 @@
             position: fixed;
             right: 24px;
             bottom: 24px;
+            
          --paper-fab-iron-icon: {
             height: 48px;
             width: 48px;
@@ -80,15 +98,16 @@
              };
   }
     </style>
-
+    
 <paper-card id ="background-card" class="background-card" elevation="2" animated-shadow="false">
   <div class="card-content">
-	  <devocional-header date="[[date]]" is-editable="{{isEditable}}"></devocional-header>
+       
+	  <devocional-header date="[[date]]" is-editable="{{isEditable}}" selected-book="{{libro}}" selected-chapter="{{capitulo}}" bibleajax="{{bibleajax}}"></devocional-header>
     <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}" is-editable="{{isEditable}}"></devocional-card>
     <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}" is-editable="{{isEditable}}"></devocional-card>
     <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}" is-editable="{{isEditable}}"></devocional-card>
     <devocional-card id="aplicacionCard" header="Aplicacion Personal" text="{{aplicacion}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="textoCard" header="Texto Rhema" text="{{texto}}" is-editable="{{isEditable}}"></devocional-card>
+    <devocional-card id="textoCard" header="Texto Rhema" text="{{rhema}}" is-editable="{{isEditable}}"></devocional-card>
   
   </div>
   <div class="card-actions" hidden$="[[!isEditable]]">
@@ -110,6 +129,8 @@
       on-tap="fabTap"
       aria-label$="[[fablabel]]">
       </paper-fab> 
+     
+
 
 
 
@@ -119,6 +140,14 @@
       static get is() { return 'devocional-editor';}
       static get properties(){
         return {
+          bibleajax:{
+            type:Array,
+            value:[]
+          },
+          editorItem:{
+                    type:Object,
+                    value:{}
+                  },  
           isNew:{
             type:Boolean,
             notify: true,
@@ -152,15 +181,25 @@
             notify:true,
             value:''
           },
-          texto:{
+          rhema:{
             type: String,
             notify:true,
             value:''
           },
+          libro:{
+            type:Number
+          },
+          capitulo:{
+            type:Number
+          },
           fablabel:{
             type:String,
             value:""
-          }
+          },
+          bibleajax:{
+                        type: Array,
+                        value: [ ]
+                    }
           
         };
         }
@@ -168,6 +207,18 @@
 				//console.log("computing lock icon");
 				return isEditable ? 'save' : 'editor:mode-edit';
 			}
+      setItem(item){
+        this.date=item.day+"/"+item.month+"/"+item.year;
+        this.set('editorItem',item);
+        this.libro=item.libro;
+        this.capitulo=item.capitulo;
+        this.mensaje=item.mensaje;
+        this.promesa=item.promesa;
+        this.mandamiento=item.mandamiento;
+        this.aplicacion=item.aplicacion;
+        this.rhema=item.rhema;
+
+      }
       ready(){
         super.ready();
         if(this.isNew){

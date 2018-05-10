@@ -75,7 +75,7 @@
             handle-as="json" 
             last-response="{{bibleajax}}"
             >
-        </iron-ajax>
+        </iron-ajax> 
 
         <paper-card id="header" elevation="1" animated-shadow="true">
         <div class="card-content" style="width: 100%;">
@@ -176,7 +176,8 @@
             setChapterArray(book){
                 book++;
                 console.log(book);
-                var chapter=this.bibleajax[book].capitulos;
+                console.log(this.bibleajax);
+                var chapter=this.bibleajax[book-1].capitulos;
                 var chapterArray=[];
                 for (var i = 1; i <= chapter; i++) { 
                     chapterArray.push(i);

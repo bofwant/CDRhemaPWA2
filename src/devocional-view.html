@@ -24,6 +24,9 @@
 
         padding: 10px;
       }
+      :host([hidden]), [hidden] {
+        display: none !important;
+      }
       paper-button {
                 border-radius: 5px;
                 background-color: var(--app-primary-color);
@@ -73,31 +76,35 @@
               </devocional-item>
           </template>
       </dom-repeat> -->
+      <div id="showlist" >
+        <dom-repeat id="listrepeat" items$="{{getPages(persistedDevocionalItems,selectedPage)}}" >
+          <template>
+              <devocional-item id="{{item.index}}" 
+              index="{{item.index}}" 
+              item="[[item]]" 
+              bible-struct="[[bibleajax]]"
+              is-selected="{{item.selected}}" 
+              on-selected="itemSelected"
+              on-openeditor="openEditor" 
+              on-delete="deleteItem">
+                </devocional-item>
+            </template>
+        </dom-repeat>
+        <div style="margin-top:10px; display: flex;">
+          <paper-button id="back" disabled="[[canGoBack(devocionalPages)]]" on-tap="backPage">
+            <iron-icon icon="arrow-back" ></iron-icon> 
+          </paper-button>
+          <div style="color:#383838; 
+                text-align: center;
+                font-size: 20px;"><strong>{{selectedPageShow(selectedPage)}}</strong></div>
+          <paper-button id="leer" style="float:right;" disabled="[[canGoFoward(devocionalPages)]]" on-tap="nextPage">
+            <iron-icon icon="arrow-forward" ></iron-icon> 
+          </paper-button> 
+        </div>
+      </div>
+      <devocional-editor id="editor" hidden editor-item="{{editorItem}}" bibleajax="{{bibleajax}}">
 
-      <dom-repeat id="listrepeat" items$="{{getPages(persistedDevocionalItems,selectedPage)}}" >
-        <template>
-            <devocional-item id="{{item.index}}" 
-            index="{{item.index}}" 
-            item="[[item]]" 
-            bible-struct="[[bibleajax]]"
-            is-selected="{{item.selected}}" 
-            on-selected="itemSelected" 
-            on-delete="deleteItem">
-              </devocional-item>
-          </template>
-      </dom-repeat>
-      <div style="margin-top:10px; display: flex;">
-        <paper-button id="back" disabled="[[canGoBack(devocionalPages)]]" on-tap="backPage">
-          <iron-icon icon="arrow-back" ></iron-icon> 
-        </paper-button>
-        <div style="color:#383838; 
-        text-align: center;
-        font-size: 20px;"><strong>{{selectedPageShow(selectedPage)}}</strong></div>
-      <paper-button id="leer" style="float:right;" disabled="[[canGoFoward(devocionalPages)]]" on-tap="nextPage">
-          <iron-icon icon="arrow-forward" ></iron-icon> 
-        </paper-button> 
-    </div>
-    
+      </devocional-editor>
       <isw-dialog-remote
         id="dialogRemote"
         dialog="deleteDialog"
@@ -138,6 +145,10 @@
                   devocionalPages:{
                     type:Array,
                     value:[]
+                  },
+                  editorItem:{
+                    type:Object,
+                    value:{}
                   }       
           };
         }
@@ -152,6 +163,8 @@
             // this.lastSelected.set('item.date',"date");
           }
       	this.lastSelected = e.model;
+        //this.openEditor(e.target.item);
+        console.log(e.target.item);
       }
       deleteItem(e){
           console.log("view delete "+e.target.date +"index"+e.model.index);
@@ -238,6 +251,15 @@
             }
             selectedPageShow(page){
               return page+1;
+            }
+            openEditor(e){
+              this.$.editor.setItem(e.target.item);
+              this.$.editor.hidden=false;
+              this.$.showlist.hidden=true;
+            }
+            closeEditor(){
+              this.$.editor.hidden=true;
+              this.$.showlist.hidden=false;
             }
     }
 
