@@ -272,10 +272,10 @@
         this.date=day+"/"+month+"/"+item.year;
         console.log(date);
         console.log(this.date);
-        if(date!==this.date){
+        if(date!==this.date && item.day<today.getDate()){
           this.date=date;
           this.editorItem.year=yyyy;
-        this.editorItem.month=today.getMonth();
+        this.editorItem.month=today.getMonth()+1;
         this.editorItem.day=today.getDate();
         this.libro=0;
         this.capitulo=1;
@@ -363,7 +363,7 @@
         this.editableDevocional.month=this.editorItem.month;
         this.editableDevocional.day=this.editorItem.day;
         //this.editableDevocional=this.editorItem;
-        console.log(this.editableDevocional);
+        //console.log(this.editableDevocional);
         this.$.document.saveValue(path,key);
         return this.editableDevocional;
       }
