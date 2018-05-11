@@ -10,6 +10,9 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+
+
 <link rel="import" href="../bower_components/isw-dialog/isw-dialog-remote.html">
 
 <dom-module id="add-teacher">
@@ -51,6 +54,13 @@
                 display: flex;
             }
         </style>
+        <firebase-document
+            id="document"
+            app-name="Cuaderno Devocional Rhema"
+            data="{{data}}"
+            path="/jamon"
+            >
+        </firebase-document>
 
         <paper-card id="Background" elevation="0" animated-shadow="true" >
             <div class="card-content" on-tap="showButtons" >
@@ -58,7 +68,7 @@
                     <h1 id="header"><strong>Agregar Profesor</strong></h1>
                 </div>
             </div>
-            <iron-autogrow-textarea id="teacherCode" rows="1" value="{{text}}" placeholder="Codigo">
+            <iron-autogrow-textarea id="teacherCode" rows="1" value="{{text}}" placeholder="Email">
             </iron-autogrow-textarea>
              
             
@@ -96,14 +106,38 @@
                     type:String,
                     notify:true
                 },
+                data:{
+                    type:Object,
+                }
                 
         };
         }
         
         addTeacher(){
         	var alumn= {email:this.user.email,id: this.user.id};
-             var key= this.user.email;
-             var path= 'teacher/'+this.text+'/alumn';
+             var key= this.user.email.split("@")[0];;
+             var teacher=this.text.split("@")[0];
+             var path= 'teacher/'+teacher;
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+
+                if(dd<10) {
+                    dd = '0'+dd
+                } 
+
+                if(mm<10) {
+                    mm = '0'+mm
+                } 
+
+                var date = mm + '/' + dd + '/' + yyyy;
+               this.data.id=this.user.uid;
+               this.data.email=this.user.email;
+               
+               this.data.registerDate=date;
+             this.$.document.data=this.data;
+             this.$.document.saveValue(path,key);
              console.log(this.user);
              console.debug(path+key);
         	const event = new CustomEvent('teacher-added', { bubbles: true, composed: true});
