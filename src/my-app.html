@@ -391,6 +391,17 @@ Code distributed by Google as part of the polymer project is also subject to an 
 			  cancelTeacher(){
 				this.$.teacherdialog.close();
 			  }
+
+			  getTeachers(teacherArray){
+				  var filteredArray=[];
+				  var check=this.user.email.split('@')[0];
+				  for(var i=0;i<teacherarray.length;i++){
+					  if(teacherArray[i].$key==check){
+						  filteredArray.push(teacherArray[i]);
+					  }
+				  }
+				  console.debug(filteredArray);
+			  }
 			
 			constructor() {
 				super(); // attached();
