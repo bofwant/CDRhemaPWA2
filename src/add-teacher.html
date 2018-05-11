@@ -52,30 +52,29 @@
             }
         </style>
 
-        <paper-card id="Background" elevation="1" animated-shadow="true" >
+        <paper-card id="Background" elevation="0" animated-shadow="true" >
             <div class="card-content" on-tap="showButtons" >
                 <div class="main-header">
                     <h1 id="header"><strong>Agregar Profesor</strong></h1>
                 </div>
-                </div>
+            </div>
             <iron-autogrow-textarea id="teacherCode" rows="1" value="{{text}}" placeholder="Codigo">
             </iron-autogrow-textarea>
              
             
             <iron-collapse id="buttonContainer" style="width:100%;" opened="true">
               <div class="card-actions" style="margin-top:10px">
-                   <paper-button id="eliminar" on-tap="delete">
+                <paper-button id="eliminar" on-tap="cancel">
                    	<iron-icon icon="backspace"  ></iron-icon> 
                       Cancelar
-                   </paper-button>
-                 <paper-button id="leer" style="float:right;" on-tap="openEditor">
+                </paper-button>
+                <paper-button id="leer" style="float:right;" on-tap="addTeacher">
                    	<iron-icon icon="assignment-ind" ></iron-icon> 
                       Agregar
-                   </paper-button> 
+                </paper-button> 
                </div>
              </iron-collapse>
-        
-      </paper-card>
+        </paper-card>
 
     
     </template>
@@ -105,6 +104,8 @@
         	var alumn= {email:this.user.email,id: this.user.id};
              var key= this.user.email;
              var path= 'teacher/'+this.text+'/alumn';
+             console.log(this.user);
+             console.debug(path+key);
         	const event = new CustomEvent('teacher-added', { bubbles: true, composed: true});
              this.dispatchEvent(event);
         }

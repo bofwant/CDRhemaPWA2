@@ -13,6 +13,8 @@ Code distributed by Google as part of the polymer project is also subject to an 
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
@@ -34,6 +36,10 @@ Code distributed by Google as part of the polymer project is also subject to an 
 <link rel="lazy-import" href="my-view2.html">
 <link rel="lazy-import" href="my-view3.html">
 <link rel="lazy-import" href="my-view404.html">
+
+
+<link rel="import" href="add-teacher.html">
+
 <dom-module id="my-app">
 	<template>
 		<style> 
@@ -114,6 +120,31 @@ app-header paper-icon-button {
 						font-size: 40px;
 						margin: 10px
 			}
+			.teacher-dialog{
+				border-radius: 5px;
+                margin: 10px;
+                margin-left: 4px;
+                margin-right: 4px;
+                padding: 0px;
+                display: block;
+                background-color:var(--app-primary-background-color,red);
+			}
+			.profile-pic{
+				border: 2px solid;
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+				background: var(--app-secondary-color);
+				border-color: var(--app-secondary-color);
+				
+			}
+			paper-button {
+                border-radius: 5px;
+                background-color: var(--app-primary-color);
+                margin-left: 10%;
+				margin-right: 10%;
+                color:white;
+            }
 </style>
 	<app-location route="{{route}}" use-hash-as-path url-space-regex="^[[rootPath]]">
 	</app-location>
@@ -130,13 +161,25 @@ app-header paper-icon-button {
 		<!-- Drawer content -->
 		<app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
 			<app-toolbar class="dtoolbar">
-				<iron-icon icon="menu" ></iron-icon>
-        		<div main-title style="text-align:center"><strong>[[user.displayName]]</strong></div>
+				<iron-image sizing="cover" src="[[user.photoURL]]" alt="logo" 
+				class="profile-pic"
+				></iron-image>
+		
+				<div main-title style="text-align:center"><strong>[[user.displayName]]</strong></div>
+				
 			</app-toolbar>
 			<iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
 				<a name="devocional" href="[[rootPath]]#/devocional">Devocional</a>
 				<a name="notas" href="[[rootPath]]#/notas">Notas</a>
 			</iron-selector>
+			<div>
+				<paper-button id="leer" style="float:right;" on-tap="openAddTeacher">
+					<iron-icon icon="assignment-ind" ></iron-icon> 
+					Agregar Profesor
+				</paper-button> 
+			</div>
+			
+			
 		</app-drawer>
 		<!-- Main content -->
 		<app-header-layout has-scrolling-region>
@@ -158,7 +201,7 @@ app-header paper-icon-button {
 			</app-header-layout>
 		</app-drawer-layout>
 		
-		<isw-dialog id="dialog" name="deleteDialog" data="{{dialogData}}" modal>
+		<isw-dialog id="dialog" name="deleteDialog" data="{{dialogData}}" with-backdrop style="border-radius: 10px;">
 			<div class = "main-header">
 				<h1><strong>Eliminar pagina del Dia: </strong></h1>
 				
@@ -169,11 +212,16 @@ app-header paper-icon-button {
 				<paper-button class="dialog-button" dialog-confirm>Acceptar</paper-button>
 			</div>
 		</isw-dialog>
+		<paper-dialog id="teacherdialog" name="deleteDialog" class="teacher-dialog" with-backdrop
+			on-teacher-added="addTeacher" on-cancelled="cancelTeacher">
+			<add-teacher user="[[user]]"></add-teacher>
+		</paper-dialog>
 		<devocional-login 
             on-sign-in="signIn"
             signed-in="[[signedIn]]"
             disabled="[[!online]]">
-        </devocional-login>
+		</devocional-login>
+				
 		
 	</template>
 	<script>
@@ -224,10 +272,10 @@ app-header paper-icon-button {
 					user:{
 						type:Object
 					}, 
-          barTitle:{
-            type: String,
-            value: "Menu"
-          },
+					barTitle:{
+						type: String,
+						value: "Menu"
+					},
 					page: {
 						type: String,
 						reflectToAttribute: true,
@@ -312,6 +360,7 @@ app-header paper-icon-button {
 			   this.$.dialog.close();
 				
 			}
+			
 			signIn() {
 				this.$.auth.signInWithPopup().catch(function(error) {
 					// unsuccessful authentication response here
@@ -321,6 +370,15 @@ app-header paper-icon-button {
 			signOut() {
         		this.$.auth.signOut();
       		}
+			  openAddTeacher(){
+				this.$.teacherdialog.open();
+			}
+			  addTeacher(){
+				this.$.teacherdialog.close();
+			  }
+			  cancelTeacher(){
+				this.$.teacherdialog.close();
+			  }
 			
 			constructor() {
 				super(); // attached();
