@@ -1,40 +1,40 @@
-[debug] [2018-05-12T14:26:12.291Z] ----------------------------------------------------------------------
-[debug] [2018-05-12T14:26:12.293Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Daniel\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] [2018-05-12T14:26:12.293Z] CLI Version:   3.18.4
-[debug] [2018-05-12T14:26:12.293Z] Platform:      win32
-[debug] [2018-05-12T14:26:12.293Z] Node Version:  v8.11.1
-[debug] [2018-05-12T14:26:12.294Z] Time:          Sat May 12 2018 10:26:12 GMT-0400 (Hora estándar de Venezuela)
-[debug] [2018-05-12T14:26:12.294Z] ----------------------------------------------------------------------
+[debug] [2018-05-12T16:59:20.697Z] ----------------------------------------------------------------------
+[debug] [2018-05-12T16:59:20.700Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Daniel\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-05-12T16:59:20.700Z] CLI Version:   3.18.4
+[debug] [2018-05-12T16:59:20.700Z] Platform:      win32
+[debug] [2018-05-12T16:59:20.700Z] Node Version:  v8.11.1
+[debug] [2018-05-12T16:59:20.701Z] Time:          Sat May 12 2018 12:59:20 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-12T16:59:20.701Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-05-12T14:26:12.303Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-05-12T14:26:12.304Z] > authorizing via signed-in user
-[debug] [2018-05-12T14:26:12.305Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2018-05-12T14:26:12.305Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+[debug] [2018-05-12T16:59:20.712Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-12T16:59:20.713Z] > authorizing via signed-in user
+[debug] [2018-05-12T16:59:20.714Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-05-12T16:59:20.714Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
  { refresh_token: '1/pDY3KatLygt9-L1w3ffeAQaPCc1lHbiJsFEKcy4gUH8',
   client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Sat May 12 2018 10:26:12 GMT-0400 (Hora estándar de Venezuela)
-[debug] [2018-05-12T14:26:13.027Z] <<< HTTP RESPONSE 200
-[debug] [2018-05-12T14:26:13.031Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/devocional-rhema-166721  
+ Sat May 12 2018 12:59:20 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-12T16:59:22.970Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-12T16:59:22.978Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/devocional-rhema-166721  
   
- Sat May 12 2018 10:26:13 GMT-0400 (Hora estándar de Venezuela)
-[debug] [2018-05-12T14:26:15.383Z] <<< HTTP RESPONSE 200
-[debug] [2018-05-12T14:26:15.384Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/devocional-rhema-166721/tokens  
+ Sat May 12 2018 12:59:22 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-12T16:59:23.815Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-12T16:59:23.816Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/devocional-rhema-166721/tokens  
   
- Sat May 12 2018 10:26:15 GMT-0400 (Hora estándar de Venezuela)
-[debug] [2018-05-12T14:26:16.287Z] <<< HTTP RESPONSE 200
-[debug] [2018-05-12T14:26:16.288Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/devocional-rhema-166721  
+ Sat May 12 2018 12:59:23 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-12T16:59:24.592Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-12T16:59:24.594Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/devocional-rhema-166721  
   
- Sat May 12 2018 10:26:16 GMT-0400 (Hora estándar de Venezuela)
-[debug] [2018-05-12T14:26:17.363Z] <<< HTTP RESPONSE 200
+ Sat May 12 2018 12:59:24 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-12T16:59:25.745Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from 'D:\RepositoriosGIT\CDRhemaPWA2\CDRhemaPWA2'...
 [info] 
-[debug] [2018-05-12T14:26:17.365Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/623224575199/clients/_:getWebAppConfig  
+[debug] [2018-05-12T16:59:25.748Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/623224575199/clients/_:getWebAppConfig  
   
- Sat May 12 2018 10:26:17 GMT-0400 (Hora estándar de Venezuela)
-[debug] [2018-05-12T14:26:19.003Z] <<< HTTP RESPONSE 200
+ Sat May 12 2018 12:59:25 GMT-0400 (Hora estándar de Venezuela)
+[debug] [2018-05-12T16:59:26.745Z] <<< HTTP RESPONSE 200
 [info] +  hosting: Local server: http://localhost:5000
 

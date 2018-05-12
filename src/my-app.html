@@ -168,13 +168,13 @@ Code distributed by Google as part of the polymer project is also subject to an 
 	<firebase-query
          id="teacherquery"
          app-name="Cuaderno Devocional Rhema"
-         path="/teacher"
+         path="/alumn/[[user.uid]]/teachers"
          data="{{teacherItems}}">
 	  </firebase-query>
 	  <firebase-query
          id="alumnquery"
          app-name="Cuaderno Devocional Rhema"
-         path="/teacher"
+         path="{{getAlumnPath(user)}}"
          data="{{alumnItems}}">
       </firebase-query>    
 	
@@ -442,7 +442,15 @@ Code distributed by Google as part of the polymer project is also subject to an 
 			  cancelTeacher(){
 				this.$.teacherdialog.close();
 			  }
-
+			  getAlumnPath(user){
+				  if(user){
+					var email=user.email.split('@')[0];
+				  return '/teacher/'+email;
+				  }else{
+					  return '/jamon';
+				  }
+				  
+			  }
 			  getTeachers(teacherArray){
 				  var filteredArray=[];
 				  var check=this.user.email.split('@')[0];
