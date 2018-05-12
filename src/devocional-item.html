@@ -154,9 +154,9 @@
              this.dispatchEvent(event);
          }
          computeBook(item){
-             if(this.bibleStruct){
+             if(this.bibleStruct.length>1){
                     
-            return this.bibleStruct[item.libro].libro;
+                return this.bibleStruct[item.libro].libro;
              }else{
                  
             return "Cargando";

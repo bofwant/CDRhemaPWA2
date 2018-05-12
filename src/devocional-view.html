@@ -215,7 +215,12 @@
 						//console.log( "opened" );
                         }
            _descending(data) {
-            return data.reverse();
+             if(data){
+              return data.reverse();
+             }else{
+               return data;
+             }
+            
           }
 
           splitArrayData(array){
@@ -231,10 +236,15 @@
             return myArray;
           }
           getPages(array,index){
-            var fixedArray=this._descending(array);
+            if(array){
+              var fixedArray=this._descending(array);
             this.devocionalPages=this.splitArrayData(fixedArray);
             
             return this.devocionalPages[index];
+            }else{
+              return array;
+            }
+            
           }
           
           canGoFoward(){

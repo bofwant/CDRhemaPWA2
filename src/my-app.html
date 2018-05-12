@@ -18,6 +18,7 @@ Code distributed by Google as part of the polymer project is also subject to an 
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../bower_components/isw-dialog/isw-dialog.html">
@@ -138,6 +139,14 @@ Code distributed by Google as part of the polymer project is also subject to an 
 				border-color: var(--app-secondary-color);
 				
 			}
+			.drawer-headers{
+                background-color: var(--app-primary-color); 
+                border-radius: 10px;
+                text-align:center; 
+                color: white; 
+                font-size :18px;
+            }
+			
 			paper-button {
                 border-radius: 5px;
                 background-color: var(--app-primary-color);
@@ -157,11 +166,17 @@ Code distributed by Google as part of the polymer project is also subject to an 
             signed-in="{{signedIn}}"
 			user="{{user}}">
 	<firebase-query
-         id="querybum"
+         id="teacherquery"
          app-name="Cuaderno Devocional Rhema"
          path="/teacher"
          data="{{teacherItems}}">
-      </firebase-query>   
+	  </firebase-query>
+	  <firebase-query
+         id="alumnquery"
+         app-name="Cuaderno Devocional Rhema"
+         path="/teacher"
+         data="{{alumnItems}}">
+      </firebase-query>    
 	
 	<app-drawer-layout fullbleed narrow="{{narrow}}">
 		<!-- Drawer content -->
@@ -182,7 +197,39 @@ Code distributed by Google as part of the polymer project is also subject to an 
 					<iron-icon icon="assignment-ind" ></iron-icon> 
 					Agregar Profesor
 				</paper-button> 
+				
 			</div>
+			<div>
+					<div>
+							<div class="drawer-headers">Profesores:</div>
+							<iron-list id="teacherList" items="[[teacherItems]]" style="height:150px">
+									<template>
+											  <div class="card-content" style="display: flex;padding: 10px">
+													<div style="margin-left: 4px; vertical-align:middle; word-wrap:break-word; width: 60%">[[item.$key]]</div>
+													
+													<paper-icon-button icon="delete" style="vertical-align:middle;" key="[[item.$key]]" on-tap="deleteTeacher"></paper-icon-button>
+											  </div>
+											
+									</template>
+							</iron-list>
+						</div>
+						
+						<div >
+								<div class="drawer-headers">Alumnos:</div>
+							<iron-list id="alumnList" items="[[alumnItems]]" style="height:150px">
+									<template>
+										<div style="display: flex;padding: 10px">
+												<div style="margin-left: 4px; vertical-align:middle; word-wrap:break-word; width: 60%">[[item.$key]]</div>
+													
+												<paper-icon-button icon="assignment"></paper-icon-button>
+										</div>
+											
+									</template>
+							</iron-list>
+						</div>
+			</div>
+			
+			
 			
 			
 		</app-drawer>
@@ -270,7 +317,11 @@ Code distributed by Google as part of the polymer project is also subject to an 
 					},
 					teacherItems:{
 						type:Array,
-						value:[]
+						value:[{aaa:"hola"},{aas:"jaja"}]
+					},
+					alumnItems:{
+						type:Array,
+						value:[{aaa:"hola"},{aas:"jaja"}]
 					},
 					_data: {
 						type: Object,
@@ -401,6 +452,16 @@ Code distributed by Google as part of the polymer project is also subject to an 
 					  }
 				  }
 				  console.debug(filteredArray);
+			  }
+			  deleteTeacher(e){
+				  
+				console.log("delete teacher: "+e.target.key);
+				this.$.teacherquery.ref.child(e.target.key).remove();
+				if(this.$.teacherquery.limitToFirst>0){
+					this.$.teacherquery.limitToFirst++;
+				}else{
+					this.$.teacherquery.limitToFirst=10000;
+				}
 			  }
 			
 			constructor() {
