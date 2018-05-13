@@ -41,6 +41,15 @@
                 align-self: center;
                 display: flex;
             }
+            .teacher-autogrow-textarea{
+                border-radius: 5px;
+                border-color: #486d03;
+                margin: auto;
+                margin-top: 5px;
+                width: 100%;
+                align-self: center;
+                display: flex;
+            }
         </style>
 
         <paper-card id="mensaje" elevation="0" animated-shadow="true">
@@ -50,7 +59,9 @@
                 </div>
             </div> 
         <div class="card-content">
-            <iron-autogrow-textarea id="mensajetext" rows="4" value="{{text}}" readonly="[[!isEditable]]">
+            <iron-autogrow-textarea id="mensajetext" rows="4" value="{{text}}" readonly="{{getReadOnly(isEditable)}}">
+            </iron-autogrow-textarea>
+            <iron-autogrow-textarea class="teacher-autogrow-textarea" id="mensajetextteacher" rows="2" value="{{correctText}}" placeholder="{{placeholder}}" readonly="{{getTeacherReadOnly(isEditable)}}">
             </iron-autogrow-textarea>
               
         </div>
@@ -68,6 +79,11 @@
                     type:Boolean,
                     notify: true
                  },
+                 isTeacher:{
+                    type:Boolean,
+                    notify: true,
+                    value:false
+                 },
                 header:{
                     type:String,
                     value:"Header"
@@ -77,7 +93,32 @@
                     notify:true,
                     value:"text"
                 },
+                correctText:{
+                    type:String,
+                    notify:true,
+                    value:""
+                },
+                placeholder:{
+                    type:String,
+                    notify:true,
+                    value:"placeholder"
+                },
         };
+        }
+        getTeacherReadOnly(){
+            if(this.isTeacher){
+                return !this.isEditable;
+            }else{
+                return true;
+            }
+        }
+        getReadOnly(){
+            if(this.isTeacher){
+                return true;
+            }else{
+                return !this.isEditable;
+            }
+            
         }
     }
     window.customElements.define(DevocionalCard.is,DevocionalCard);

@@ -112,11 +112,11 @@
   <div class="card-content">
        
 	  <devocional-header date="[[date]]" is-editable="{{isEditable}}" selected-book="{{libro}}" selected-chapter="{{capitulo}}" bibleajax="{{bibleajax}}"></devocional-header>
-    <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="aplicacionCard" header="Aplicacion Personal" text="{{aplicacion}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="textoCard" header="Texto Rhema" text="{{rhema}}" is-editable="{{isEditable}}"></devocional-card>
+    <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.mensaje]]"></devocional-card>
+    <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.promesa]]"></devocional-card>
+    <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.mandamiento]]"></devocional-card>
+    <devocional-card id="aplicacionCard" header="Aplicacion Personal" text="{{aplicacion}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.aplicacion]]"></devocional-card>
+    <devocional-card id="textoCard" header="Texto Rhema" text="{{rhema}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.rhema]]"></devocional-card>
   
   </div>
   <div class="card-actions" hidden$="[[!isEditable]]">
@@ -162,6 +162,11 @@
             notify: true,
             value:true},
           isEditable:{
+            type:Boolean,
+            notify: true,
+            value:false
+          },
+          isTeacher:{
             type:Boolean,
             notify: true,
             value:false
@@ -220,7 +225,16 @@
           },
           user:{
             type:Object
+          },
+          placeholders:{
+            type:Object,
+            value:{mensaje:'Aqui van las Correcciones.',
+            promesa:'Aqui van las Correcciones',
+            mandamiento:'Aqui van las Correcciones',
+            aplicacion:'Aqui van las Correcciones',
+            rhema:'Aqui van las Correcciones'
           }
+        },
           
         };
         }
