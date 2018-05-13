@@ -101,6 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="bower_components/webcomponentsjs/webcomponents-loader.js">
     </script>
     <link rel="import" href="bower_components/polymerfire/firebase-app.html">
+    <link rel="import" href="bower_components/https-redirect/https-redirect.html">
 
     <!-- Load your application shell -->
     <link rel="import" href="src/my-app.html">
@@ -125,7 +126,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       auth-domain="devocional-rhema-166721.firebaseapp.com"
       database-url="https://devocional-rhema-166721.firebaseio.com">
     </firebase-app>
-
+    <https-redirect></https-redirect>
     <my-app></my-app>
     <script>
       document.querySelector('my-app').attached();
