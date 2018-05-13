@@ -183,6 +183,13 @@ Code distributed by Google as part of the polymer project is also subject to an 
             data="{{data2}}"
             path="/jamon"
             >
+		</firebase-document>
+		<firebase-document
+            id="teacherDocument"
+            app-name="Cuaderno Devocional Rhema"
+            data="{{isTeacher}}"
+            path="{{getIsTeacher(user)}}"
+            >
         </firebase-document>   
 	
 	<app-drawer-layout fullbleed narrow="{{narrow}}">
@@ -193,11 +200,11 @@ Code distributed by Google as part of the polymer project is also subject to an 
 				class="profile-pic"></iron-image>
 		
 				<div main-title style="text-align:center"><strong>[[user.displayName]]</strong></div>
-				<paper-icon-button icon="assignment-ind" on-tap="registerTeacher" dissabled="[[isTeacher]]"></paper-icon-button>
+				<paper-icon-button icon="assignment-ind" on-tap="registerTeacher" disabled="[[!isTeacher]]"></paper-icon-button>
 			</app-toolbar>
 			<iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-				<a name="devocional" href="[[rootPath]]#/devocional">Devocional</a>
-				<a name="notas" href="[[rootPath]]#/notas">Notas</a>
+				<a name="devocional" href="[[rootPath]]#/devocional" on-tap="resetHeader">Devocional</a>
+				<a name="notas" href="[[rootPath]]#/notas" on-tap="resetHeader">Notas</a>
 			</iron-selector>
 			<div>
 				<paper-button id="leer" style="float:right;" on-tap="openAddTeacher">
@@ -221,7 +228,7 @@ Code distributed by Google as part of the polymer project is also subject to an 
 							</iron-list>
 						</div>
 						
-						<div >
+						<div hidden="[[!isTeacher]]">
 								<div class="drawer-headers">Alumnos:</div>
 							<iron-list id="alumnList" items="[[alumnItems]]" style="height:150px">
 									<template>
@@ -246,7 +253,7 @@ Code distributed by Google as part of the polymer project is also subject to an 
 				<app-toolbar>
 					<paper-icon-button id="tdrwr" icon="my-icons:menu" drawer-toggle></paper-icon-button>
 					<paper-icon-button id="cledtr" icon="arrow-back" on-tap="closeEditor" hidden></paper-icon-button>
-					<div main-title style="text-align:center"><strong>Cuaderno Devocional rhema</strong></div>
+					<div main-title style="text-align:center"><strong>[[title]]</strong></div>
 					<iron-icon icon="cloud" hidden$="[[!online]]"></iron-icon>
 					<iron-icon icon="cloud-off" hidden$="[[online]]"></iron-icon>
 					<paper-icon-button icon="[[computeLockIcon(signedIn)]]" disabled="[[!signedIn]]" on-tap="signOut"></paper-icon-button>
@@ -254,6 +261,7 @@ Code distributed by Google as part of the polymer project is also subject to an 
 			</app-header>
 			<iron-pages id="ironpage" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
 					<devocional-view id="deview" user="[[user]]" name="devocional" on-openeditor="editorOpened"></devocional-view>
+					<devocional-view id="deviewAlumn" user="[[selectedAlumn]]" name="devocional/[[selectedAlumn.name]]" on-openeditor="editorOpened"></devocional-view>
 					<notas-view name="notas"></notas-view>
 					<my-view404 name="view404"></my-view404>
 				</iron-pages>
@@ -319,8 +327,14 @@ Code distributed by Google as part of the polymer project is also subject to an 
 							return window.navigator.onLine;
 						}
 					},
+					title:{
+						type:String,
+						value:"Cuaderno Devocional rhema"
+					},
 					isTeacher:{
-						type: Boolean
+						type: Boolean,
+						value:false,
+						observer:'checkTeacher'
 					},
 					teacherItems:{
 						type:Array,
@@ -329,6 +343,9 @@ Code distributed by Google as part of the polymer project is also subject to an 
 					alumnItems:{
 						type:Array,
 						value:[]
+					},
+					selectedAlumn:{
+						type:Object
 					},
 					_data: {
 						type: Object,
@@ -360,6 +377,24 @@ Code distributed by Google as part of the polymer project is also subject to an 
 					// Polymer.Element#rootPath
 					rootPath: String,
 				};
+			}
+			checkTeacher(){
+				console.log(this.isTeacher);
+				if(this.isTeacher!==false && this.isTeacher!==true){
+					this.isTeacher=false;
+				}
+			}
+			getIsTeacher(user){
+				var path='/jamon';
+				if(user){
+					 path='/teacher/'+this.user.email.split('@')[0]+'/isTeacher';
+				}
+				console.log(path);
+				return path;
+				
+			}
+			resetHeader(){
+				this.title="Cuaderno Devocional rhema";
 			}
 			editorOpened(){
 				this.$.cledtr.hidden=false;
@@ -439,6 +474,9 @@ Code distributed by Google as part of the polymer project is also subject to an 
         	}
 			signOut() {
         		this.$.auth.signOut();
+				this.$.deview.devocionalItems=[];
+				this.$.deview.persistedDevocionalItems=[];
+				this.$.deview.devocionalPages=[];
       		}
 			  openAddTeacher(){
 				this.$.teacherdialog.open();
@@ -452,7 +490,7 @@ Code distributed by Google as part of the polymer project is also subject to an 
 			  getAlumnPath(user){
 				  if(user){
 					var email=user.email.split('@')[0];
-				  return '/teacher/'+email;
+				  return '/teacher/'+email+'/alumns';
 				  }else{
 					  return '/jamon';
 				  }
@@ -474,7 +512,7 @@ Code distributed by Google as part of the polymer project is also subject to an 
 				var useremail=this.user.email.split('@')[0];
 				if(e.target.key){
 					this.$.teacherquery.ref.child(e.target.key).remove();
-					this.$.document2.path='teacher/'+e.target.key+'/'+useremail;
+					this.$.document2.path='teacher/'+e.target.key+'/alumns/'+useremail;
 					this.$.document2.destroy();
 
 				}

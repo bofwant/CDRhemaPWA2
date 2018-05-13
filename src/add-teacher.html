@@ -127,7 +127,7 @@
         	var alumn= {email:this.user.email,id: this.user.id};
             var key= this.user.email.split("@")[0];;
             var teacher=this.text.split("@")[0];
-            var path= 'teacher/'+teacher;
+            var path= 'teacher/'+teacher+'/alumns';
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth()+1; //January is 0!
@@ -140,11 +140,12 @@
             if(mm<10) {
                 mm = '0'+mm
             } 
-
+            console.log(this.user);
             var date = mm + '/' + dd + '/' + yyyy;
             this.data.id=this.user.uid;
             this.data.email=this.user.email;
             this.data.registerDate=date;
+            this.data.name=this.user.displayName;
             this.$.document.data=this.data;
             this.$.document.saveValue(path,key);
             var path2= 'alumn/'+this.user.uid+'/teachers';
