@@ -257,7 +257,8 @@
           } 
 
           var date = dd + '/' + mm + '/' + yyyy;
-          
+          this.date=date;
+        if(item && item.day){
           var day=item.day;
         var month=item.month;
         if(day<10) {
@@ -300,6 +301,19 @@
         this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+item.year+month+day;
         
         }
+        }else{
+          this.editorItem.year=yyyy;
+        this.editorItem.month=today.getMonth()+1;
+        this.editorItem.day=today.getDate();
+        this.libro=0;
+        this.capitulo=1;
+        this.mensaje="";
+        this.promesa="";
+        this.mandamiento="";
+        this.aplicacion="";
+        this.rhema="";
+        } 
+        
         
       }
 

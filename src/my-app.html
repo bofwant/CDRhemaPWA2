@@ -164,7 +164,7 @@ Code distributed by Google as part of the polymer project is also subject to an 
             app-name="Cuaderno Devocional Rhema"
             provider="google"
             signed-in="{{signedIn}}"
-			user="{{user}}">
+			user="{{user}}"></firebase-auth>
 	<firebase-query
          id="teacherquery"
          app-name="Cuaderno Devocional Rhema"
@@ -176,7 +176,14 @@ Code distributed by Google as part of the polymer project is also subject to an 
          app-name="Cuaderno Devocional Rhema"
          path="{{getAlumnPath(user)}}"
          data="{{alumnItems}}">
-      </firebase-query>    
+	  </firebase-query> 
+	  <firebase-document
+            id="document2"
+            app-name="Cuaderno Devocional Rhema"
+            data="{{data2}}"
+            path="/jamon"
+            >
+        </firebase-document>   
 	
 	<app-drawer-layout fullbleed narrow="{{narrow}}">
 		<!-- Drawer content -->
@@ -317,11 +324,11 @@ Code distributed by Google as part of the polymer project is also subject to an 
 					},
 					teacherItems:{
 						type:Array,
-						value:[{aaa:"hola"},{aas:"jaja"}]
+						value:[]
 					},
 					alumnItems:{
 						type:Array,
-						value:[{aaa:"hola"},{aas:"jaja"}]
+						value:[]
 					},
 					_data: {
 						type: Object,
@@ -464,7 +471,14 @@ Code distributed by Google as part of the polymer project is also subject to an 
 			  deleteTeacher(e){
 				  
 				console.log("delete teacher: "+e.target.key);
-				this.$.teacherquery.ref.child(e.target.key).remove();
+				var useremail=this.user.email.split('@')[0];
+				if(e.target.key){
+					this.$.teacherquery.ref.child(e.target.key).remove();
+					this.$.document2.path='teacher/'+e.target.key+'/'+useremail;
+					this.$.document2.destroy();
+
+				}
+				
 				if(this.$.teacherquery.limitToFirst>0){
 					this.$.teacherquery.limitToFirst++;
 				}else{

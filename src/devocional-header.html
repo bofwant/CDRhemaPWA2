@@ -175,6 +175,10 @@
             }
             setChapterArray(book){
                 if(this.bibleajax.length>1){
+                    if(!book){
+                        book=0;
+                        this.chapter=1;
+                    }
                     book++;
                 console.log(book);
                 console.log(this.bibleajax);
@@ -185,7 +189,6 @@
                 }
                 this.chapterArray=chapterArray;
                 }
-                
             }
     }
     window.customElements.define(DevocionalHeader.is,DevocionalHeader);
