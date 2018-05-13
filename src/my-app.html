@@ -13,9 +13,12 @@ Code distributed by Google as part of the polymer project is also subject to an 
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../bower_components/isw-dialog/isw-dialog.html">
@@ -28,12 +31,17 @@ Code distributed by Google as part of the polymer project is also subject to an 
 <link rel="import" href="../bower_components/iron-icons/editor-icons.html">
 <link rel="import" href="../bower_components/app-storage/app-network-status-behavior.html">
 <link rel="import" href="devocional-view.html">
+<link rel="import" href="devocionala-view.html">
 <link rel="import" href="devocional-login.html">
 <link rel="lazy-import" href="notas-view.html">
 <link rel="lazy-import" href="my-view1.html">
 <link rel="lazy-import" href="my-view2.html">
 <link rel="lazy-import" href="my-view3.html">
 <link rel="lazy-import" href="my-view404.html">
+
+
+<link rel="import" href="add-teacher.html">
+
 <dom-module id="my-app">
 	<template>
 		<style> 
@@ -44,52 +52,52 @@ Code distributed by Google as part of the polymer project is also subject to an 
 	--app-secondary-background-color: #EEDFBF;
 	display: relative;
 	font-family: 'Roboto', sans-serif;
-}
+		}
 
-iron-icon {
-	color: white;
-}
+		iron-icon {
+			color: white;
+		}
 
-iron app-drawer-layout:not([narrow]) [drawer-toggle] {
-	display: none;
-}
+		iron app-drawer-layout:not([narrow]) [drawer-toggle] {
+			display: none;
+		}
 
-app-header {
-	color: white;
-	background-color: var(--app-primary-color);
-}
+		app-header {
+			color: white;
+			background-color: var(--app-primary-color);
+		}
 
-app-header paper-icon-button {
-	--paper-icon-button-ink-color: white;
-	color: white;
-}
+		app-header paper-icon-button {
+			--paper-icon-button-ink-color: white;
+			color: white;
+		}
 
-.drawer-list {
-	margin: 0 20px;
-}
+		.drawer-list {
+			margin: 0 20px;
+		}
 
-.dtoolbar {
-	background-color: var(--app-primary-color, red);
-	color: white;
-	text-align: center;
-	font-size: 40;
-	height: 80px;
-	
-}
+		.dtoolbar {
+			background-color: var(--app-primary-color, red);
+			color: white;
+			text-align: center;
+			font-size: 40;
+			height: 80px;
+			
+		}
 
-.drawer-list a {
-	display: block;
-	padding: 0 16px;
-	text-decoration: none;
-	color: var(--app-secondary-color);
-	line-height: 80px;
-}
+		.drawer-list a {
+			display: block;
+			padding: 0 16px;
+			text-decoration: none;
+			color: var(--app-secondary-color);
+			line-height: 80px;
+		}
 
-.drawer-list a.iron-selected {
-	color: var(--app-primary-color, black);
-	font-weight: bold;
-	font-size: 40;
-}
+		.drawer-list a.iron-selected {
+			color: var(--app-primary-color, black);
+			font-weight: bold;
+			font-size: 40;
+		}
 			.main-header{
                 background-color: var(--app-primary-color); 
                 margin-left: 20px; 
@@ -114,6 +122,39 @@ app-header paper-icon-button {
 						font-size: 40px;
 						margin: 10px
 			}
+			.teacher-dialog{
+				border-radius: 5px;
+                margin: 10px;
+                margin-left: 4px;
+                margin-right: 4px;
+                padding: 0px;
+                display: block;
+                background-color:var(--app-primary-background-color,red);
+			}
+			.profile-pic{
+				border: 2px solid;
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+				background: var(--app-secondary-color);
+				border-color: var(--app-secondary-color);
+				
+			}
+			.drawer-headers{
+                background-color: var(--app-primary-color); 
+                border-radius: 10px;
+                text-align:center; 
+                color: white; 
+                font-size :18px;
+            }
+			
+			paper-button {
+                border-radius: 5px;
+                background-color: var(--app-primary-color);
+                margin-left: 10%;
+				margin-right: 10%;
+                color:white;
+            }
 </style>
 	<app-location route="{{route}}" use-hash-as-path url-space-regex="^[[rootPath]]">
 	</app-location>
@@ -124,19 +165,88 @@ app-header paper-icon-button {
             app-name="Cuaderno Devocional Rhema"
             provider="google"
             signed-in="{{signedIn}}"
-			user="{{user}}">
+			user="{{user}}"></firebase-auth>
+	<firebase-query
+         id="teacherquery"
+         app-name="Cuaderno Devocional Rhema"
+         path="/alumn/[[user.uid]]/teachers"
+         data="{{teacherItems}}">
+	  </firebase-query>
+	  <firebase-query
+         id="alumnquery"
+         app-name="Cuaderno Devocional Rhema"
+         path="{{getAlumnPath(user)}}"
+         data="{{alumnItems}}">
+	  </firebase-query> 
+	  <firebase-document
+            id="document2"
+            app-name="Cuaderno Devocional Rhema"
+            data="{{data2}}"
+            path="/jamon"
+            >
+		</firebase-document>
+		<firebase-document
+            id="teacherDocument"
+            app-name="Cuaderno Devocional Rhema"
+            data="{{isTeacher}}"
+            path="{{getIsTeacher(user)}}"
+            >
+        </firebase-document>   
 	
 	<app-drawer-layout fullbleed narrow="{{narrow}}">
 		<!-- Drawer content -->
 		<app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
 			<app-toolbar class="dtoolbar">
-				<iron-icon icon="menu" ></iron-icon>
-        		<div main-title style="text-align:center"><strong>[[user.displayName]]</strong></div>
+				<iron-image sizing="cover" src="[[user.photoURL]]" alt="logo" 
+				class="profile-pic"></iron-image>
+		
+				<div main-title style="text-align:center"><strong>[[user.displayName]]</strong></div>
+				<paper-icon-button icon="assignment-ind" on-tap="registerTeacher" disabled="[[!isTeacher]]"></paper-icon-button>
 			</app-toolbar>
-			<iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-				<a name="devocional" href="[[rootPath]]#/devocional">Devocional</a>
-				<a name="notas" href="[[rootPath]]#/notas">Notas</a>
+			<iron-selector id="pageSelector" selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+				<a name="devocional" href="[[rootPath]]#/devocional" on-tap="resetHeader">Devocional</a>
+				<a name="notas" href="[[rootPath]]#/notas" on-tap="resetHeader">Notas</a>
 			</iron-selector>
+			<div>
+				<paper-button id="leer" style="float:right;" on-tap="openAddTeacher">
+					<iron-icon icon="assignment-ind" ></iron-icon> 
+					Agregar Profesor
+				</paper-button> 
+				
+			</div>
+			<div>
+					<div>
+							<div class="drawer-headers">Profesores:</div>
+							<iron-list id="teacherList" items="[[teacherItems]]" style="height:150px">
+									<template>
+											  <div class="card-content" style="display: flex;padding: 10px">
+													<div style="margin-left: 4px; vertical-align:middle; word-wrap:break-word; width: 60%">[[item.$key]]</div>
+													
+													<paper-icon-button icon="delete" style="vertical-align:middle;" key="[[item.$key]]" on-tap="deleteTeacher"></paper-icon-button>
+											  </div>
+											
+									</template>
+							</iron-list>
+						</div>
+						
+						<div hidden="[[!isTeacher]]">
+								<div class="drawer-headers">Alumnos:</div>
+							<iron-list id="alumnList" items="[[alumnItems]]" style="height:150px">
+									<template>
+										<div style="display: flex;padding: 10px">
+												<div style="margin-left: 4px; vertical-align:middle; word-wrap:break-word; width: 60%">[[item.$key]]</div>
+													
+												<paper-icon-button icon="assignment" key="[[item.$key]]" on-tap="openAlumnDevocional"></paper-icon-button>
+										</div>
+											
+									</template>
+							</iron-list>
+						</div>
+			</div>
+			
+			
+			
+			
 		</app-drawer>
 		<!-- Main content -->
 		<app-header-layout has-scrolling-region>
@@ -144,7 +254,7 @@ app-header paper-icon-button {
 				<app-toolbar>
 					<paper-icon-button id="tdrwr" icon="my-icons:menu" drawer-toggle></paper-icon-button>
 					<paper-icon-button id="cledtr" icon="arrow-back" on-tap="closeEditor" hidden></paper-icon-button>
-					<div main-title style="text-align:center"><strong>Cuaderno Devocional rhema</strong></div>
+					<div main-title style="text-align:center"><strong>[[title]]</strong></div>
 					<iron-icon icon="cloud" hidden$="[[!online]]"></iron-icon>
 					<iron-icon icon="cloud-off" hidden$="[[online]]"></iron-icon>
 					<paper-icon-button icon="[[computeLockIcon(signedIn)]]" disabled="[[!signedIn]]" on-tap="signOut"></paper-icon-button>
@@ -152,13 +262,14 @@ app-header paper-icon-button {
 			</app-header>
 			<iron-pages id="ironpage" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
 					<devocional-view id="deview" user="[[user]]" name="devocional" on-openeditor="editorOpened"></devocional-view>
+					<devocionala-view id="deviewAlumn" user="[[selectedAlumn]]" name="devocionala" on-openeditor="editorOpened"></devocionala-view>
 					<notas-view name="notas"></notas-view>
 					<my-view404 name="view404"></my-view404>
 				</iron-pages>
 			</app-header-layout>
 		</app-drawer-layout>
 		
-		<isw-dialog id="dialog" name="deleteDialog" data="{{dialogData}}" modal>
+		<isw-dialog id="dialog" name="deleteDialog" data="{{dialogData}}" with-backdrop style="border-radius: 10px;">
 			<div class = "main-header">
 				<h1><strong>Eliminar pagina del Dia: </strong></h1>
 				
@@ -169,11 +280,16 @@ app-header paper-icon-button {
 				<paper-button class="dialog-button" dialog-confirm>Acceptar</paper-button>
 			</div>
 		</isw-dialog>
+		<paper-dialog id="teacherdialog" name="deleteDialog" class="teacher-dialog" with-backdrop
+			on-teacher-added="addTeacher" on-cancelled="cancelTeacher">
+			<add-teacher user="[[user]]"></add-teacher>
+		</paper-dialog>
 		<devocional-login 
             on-sign-in="signIn"
             signed-in="[[signedIn]]"
             disabled="[[!online]]">
-        </devocional-login>
+		</devocional-login>
+				
 		
 	</template>
 	<script>
@@ -212,6 +328,26 @@ app-header paper-icon-button {
 							return window.navigator.onLine;
 						}
 					},
+					title:{
+						type:String,
+						value:"Cuaderno Devocional rhema"
+					},
+					isTeacher:{
+						type: Boolean,
+						value:false,
+						observer:'checkTeacher'
+					},
+					teacherItems:{
+						type:Array,
+						value:[]
+					},
+					alumnItems:{
+						type:Array,
+						value:[]
+					},
+					selectedAlumn:{
+						type:Object
+					},
 					_data: {
 						type: Object,
 						notify: true
@@ -224,10 +360,10 @@ app-header paper-icon-button {
 					user:{
 						type:Object
 					}, 
-          barTitle:{
-            type: String,
-            value: "Menu"
-          },
+					barTitle:{
+						type: String,
+						value: "Menu"
+					},
 					page: {
 						type: String,
 						reflectToAttribute: true,
@@ -243,6 +379,24 @@ app-header paper-icon-button {
 					rootPath: String,
 				};
 			}
+			checkTeacher(){
+				console.log(this.isTeacher);
+				if(this.isTeacher!==false && this.isTeacher!==true){
+					this.isTeacher=false;
+				}
+			}
+			getIsTeacher(user){
+				var path='/jamon';
+				if(user){
+					 path='/teacher/'+this.user.email.split('@')[0]+'/isTeacher';
+				}
+				console.log(path);
+				return path;
+				
+			}
+			resetHeader(){
+				this.title="Cuaderno Devocional rhema";
+			}
 			editorOpened(){
 				this.$.cledtr.hidden=false;
 				this.$.tdrwr.hidden=true;
@@ -251,6 +405,7 @@ app-header paper-icon-button {
 				this.$.cledtr.hidden=true;
 				this.$.tdrwr.hidden=false;
 				this.$.deview.closeEditor();
+				this.$.deviewAlumn.closeEditor();
 			}
 			/*================ appbar stuff========*/
 			computeLockIcon(signedIn) {
@@ -302,6 +457,7 @@ app-header paper-icon-button {
 				//new page resolver
 				const resolvedPageUrl = this.resolveUrl(page + '-view' + '.html');
 				Polymer.importHref(resolvedPageUrl, null, this._showPage404.bind(this), true);
+				console.debug("page: " + page);
 			}
 			_showPage404() {
 				this.page = 'view404';
@@ -312,6 +468,7 @@ app-header paper-icon-button {
 			   this.$.dialog.close();
 				
 			}
+			
 			signIn() {
 				this.$.auth.signInWithPopup().catch(function(error) {
 					// unsuccessful authentication response here
@@ -320,7 +477,71 @@ app-header paper-icon-button {
         	}
 			signOut() {
         		this.$.auth.signOut();
+				this.$.deview.devocionalItems=[];
+				this.$.deview.persistedDevocionalItems=[];
+				this.$.deview.devocionalPages=[];
       		}
+			  openAddTeacher(){
+				this.$.teacherdialog.open();
+			}
+			  addTeacher(){
+				this.$.teacherdialog.close();
+			  }
+			  cancelTeacher(){
+				this.$.teacherdialog.close();
+			  }
+			  getAlumnPath(user){
+				  if(user){
+					var email=user.email.split('@')[0];
+				  return '/teacher/'+email+'/alumns';
+				  }else{
+					  return '/jamon';
+				  }
+				  
+			  }
+			  getTeachers(teacherArray){
+				  var filteredArray=[];
+				  var check=this.user.email.split('@')[0];
+				  for(var i=0;i<teacherarray.length;i++){
+					  if(teacherArray[i].$key==check){
+						  filteredArray.push(teacherArray[i]);
+					  }
+				  }
+				  console.debug(filteredArray);
+			  }
+			  deleteTeacher(e){
+				  
+				console.log("delete teacher: "+e.target.key);
+				var useremail=this.user.email.split('@')[0];
+				if(e.target.key){
+					this.$.teacherquery.ref.child(e.target.key).remove();
+					this.$.document2.path='teacher/'+e.target.key+'/alumns/'+useremail;
+					this.$.document2.destroy();
+
+				}
+				
+				if(this.$.teacherquery.limitToFirst>0){
+					this.$.teacherquery.limitToFirst++;
+				}else{
+					this.$.teacherquery.limitToFirst=10000;
+				}
+			  }
+			  openAlumnDevocional(e){
+				  var key=e.target.key;
+				  var alumn={};
+				  for(var i=0;i<this.alumnItems.length;i++){
+					  if(this.alumnItems[i].$key==key){
+						  alumn=this.alumnItems[i];
+					  }
+				  }
+				  this.selectedAlumn=alumn;
+				  console.log(this.alumnItems);
+				  console.log(this.selectedAlumn);
+				  //this.page='devocionalalumno';
+				  this.$.pageSelector.selected='devocionala';
+				  window.location.href=this.rootPath+'#/devocionala';
+				  this.title=alumn.name;
+			  }
 			
 			constructor() {
 				super(); // attached();

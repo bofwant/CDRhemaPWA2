@@ -50,7 +50,7 @@
             </div> 
             <iron-collapse id="buttonContainer" style="width:100%;" opened="{{isSelected}}">
               <div class="card-actions" style="margin-top:10px">
-                   <paper-button id="eliminar" on-tap="delete">
+                   <paper-button id="eliminar" on-tap="delete" disabled="[[isTeacher]]">
                    	<iron-icon icon="delete"  ></iron-icon> 
                       Eliminar
                    </paper-button>
@@ -72,6 +72,10 @@
             static get properties(){
                 return {
                  isSelected:{
+                    type:Boolean,
+                    notify: true
+                 },
+                 isTeacher:{
                     type:Boolean,
                     notify: true
                  },
@@ -154,9 +158,9 @@
              this.dispatchEvent(event);
          }
          computeBook(item){
-             if(this.bibleStruct){
+             if(this.bibleStruct.length>1){
                     
-            return this.bibleStruct[item.libro].libro;
+                return this.bibleStruct[item.libro].libro;
              }else{
                  
             return "Cargando";

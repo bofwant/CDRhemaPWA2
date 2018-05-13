@@ -80,7 +80,7 @@
         <paper-card id="header" elevation="1" animated-shadow="true">
         <div class="card-content" style="width: 100%;">
               
-                    <paper-dropdown-menu-light  label="Libro" disabled="{{!isEditable}}">
+                    <paper-dropdown-menu-light  label="Libro" disabled="{{getReadOnly(isEditable)}}">
                             <paper-listbox id="libroPicker" slot="dropdown-content" class="dropdown-content" selected="{{selectedBook}}">
                                     <template is="dom-repeat" items="{{bibleajax}}">
                                             <paper-item >
@@ -91,7 +91,7 @@
                         </paper-dropdown-menu-light>  
                     
             
-            <paper-dropdown-menu-light  id="chapterPicker" label="Capitulo" disabled="{{!isEditable}}">
+            <paper-dropdown-menu-light  id="chapterPicker" label="Capitulo" disabled="{{getReadOnly(isEditable)}}">
                     <paper-listbox slot="dropdown-content" class="dropdown-content" selected="{{selectedChapter}}" >
                             <template is="dom-repeat" items="{{chapterArray}}">
                                     <paper-item >
@@ -117,6 +117,11 @@
                     isEditable:{
                         type:Boolean,
                         notify: true
+                    },
+                    isTeacher:{
+                        type:Boolean,
+                        notify: true,
+                        value:false
                     },
                     date:{
                         type:String,
@@ -169,12 +174,24 @@
                 /*var testLibro= {"libro":"Génesis","capitulos":51};
                 this.push('bibleStruct', testLibro);*/
             }
+            getReadOnly(){
+                if(this.isTeacher){
+                    return true;
+                }else{
+                    return !this.isEditable;
+                }
+            }
             loadedBibleStruct(bible){
                 //console.log("bible struct Loaded");
                 //console.log(JSON.stringify(bible));
             }
             setChapterArray(book){
-                book++;
+                if(this.bibleajax.length>1){
+                    if(!book){
+                        book=0;
+                        this.chapter=1;
+                    }
+                    book++;
                 console.log(book);
                 console.log(this.bibleajax);
                 var chapter=this.bibleajax[book-1].capitulos;
@@ -183,6 +200,7 @@
                     chapterArray.push(i);
                 }
                 this.chapterArray=chapterArray;
+                }
             }
     }
     window.customElements.define(DevocionalHeader.is,DevocionalHeader);

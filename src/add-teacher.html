@@ -1,0 +1,169 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+
+
+<link rel="import" href="../bower_components/isw-dialog/isw-dialog-remote.html">
+
+<dom-module id="add-teacher">
+    <template>
+        <style>
+            paper-card{
+                border-radius: 5px;
+                margin: 10px;
+                margin-left: 4px;
+                margin-right: 4px;
+                padding: 20px;
+                display: block;
+                background-color:var(--app-primary-background-color,red);
+            }
+            .card-content {
+                background-color: var(--app-primary-color); 
+                border-radius: 10px;
+                margin-bottom:10px;
+                text-align:center; 
+        
+            }
+            .main-header {
+                color: white; 
+                font-size :12px;
+            }
+            paper-button {
+                border-radius: 5px;
+                background-color: var(--app-primary-color);
+                margin: auto;
+                color:white;
+            }
+            iron-autogrow-textarea{
+                border-radius: 5px;
+                border-color: var(--app-primary-color);
+                margin: auto;
+                text-align:center;
+                width: 100%;
+                align-self: center;
+                display: flex;
+            }
+        </style>
+        <firebase-document
+            id="document"
+            app-name="Cuaderno Devocional Rhema"
+            data="{{data}}"
+            path="/jamon"
+            >
+        </firebase-document>
+        <firebase-document
+            id="document2"
+            app-name="Cuaderno Devocional Rhema"
+            data="{{data2}}"
+            path="/jamon"
+            >
+        </firebase-document>
+
+        <paper-card id="Background" elevation="0" animated-shadow="true" >
+            <div class="card-content" on-tap="showButtons" >
+                <div class="main-header">
+                    <h1 id="header"><strong>Agregar Profesor</strong></h1>
+                </div>
+            </div>
+            <iron-autogrow-textarea id="teacherCode" rows="1" value="{{text}}" placeholder="Email">
+            </iron-autogrow-textarea>
+             
+            
+            <iron-collapse id="buttonContainer" style="width:100%;" opened="true">
+              <div class="card-actions" style="margin-top:10px">
+                <paper-button id="eliminar" on-tap="cancel">
+                   	<iron-icon icon="backspace"  ></iron-icon> 
+                      Cancelar
+                </paper-button>
+                <paper-button id="leer" style="float:right;" on-tap="addTeacher">
+                   	<iron-icon icon="assignment-ind" ></iron-icon> 
+                      Agregar
+                </paper-button> 
+               </div>
+             </iron-collapse>
+        </paper-card>
+
+    
+    </template>
+    <script>
+            /** @polymerElement */
+            class AddTeacher extends Polymer.Element{
+            static get is() { return 'add-teacher';}
+            static get properties(){
+                return {
+                 isSelected:{
+                    type:Boolean,
+                    notify: true
+                 },
+                 user:{
+                 	type:Object
+                 },
+          
+                text:{
+                    type:String,
+                    notify:true
+                },
+                data:{
+                    type:Object,
+                },
+                data2:{
+                    type:Object,
+                }
+                
+        };
+        }
+        
+        addTeacher(){
+        	var alumn= {email:this.user.email,id: this.user.id};
+            var key= this.user.email.split("@")[0];;
+            var teacher=this.text.split("@")[0];
+            var path= 'teacher/'+teacher+'/alumns';
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd = '0'+dd
+            } 
+
+            if(mm<10) {
+                mm = '0'+mm
+            } 
+            console.log(this.user);
+            var date = mm + '/' + dd + '/' + yyyy;
+            this.data.uid=this.user.uid;
+            this.data.email=this.user.email;
+            this.data.registerDate=date;
+            this.data.name=this.user.displayName;
+            this.$.document.data=this.data;
+            this.$.document.saveValue(path,key);
+            var path2= 'alumn/'+this.user.uid+'/teachers';
+            this.data2.teacher=teacher;
+            this.data2.registerDate=date;
+            this.$.document2.saveValue(path2,teacher);
+            const event = new CustomEvent('teacher-added', { bubbles: true, composed: true});
+            this.dispatchEvent(event);
+        }
+         
+        cancel(){
+        	const event = new CustomEvent('cancelled', { bubbles: true, composed: true});
+             this.dispatchEvent(event);
+        	}
+         
+         
+    }
+    window.customElements.define(AddTeacher.is,AddTeacher);
+        </script>
+
+</dom-module>

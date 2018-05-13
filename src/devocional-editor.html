@@ -111,25 +111,13 @@
 <paper-card id ="background-card" class="background-card" elevation="2" animated-shadow="false">
   <div class="card-content">
        
-	  <devocional-header date="[[date]]" is-editable="{{isEditable}}" selected-book="{{libro}}" selected-chapter="{{capitulo}}" bibleajax="{{bibleajax}}"></devocional-header>
-    <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="aplicacionCard" header="Aplicacion Personal" text="{{aplicacion}}" is-editable="{{isEditable}}"></devocional-card>
-    <devocional-card id="textoCard" header="Texto Rhema" text="{{rhema}}" is-editable="{{isEditable}}"></devocional-card>
+	  <devocional-header date="[[date]]" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" selected-book="{{libro}}" selected-chapter="{{capitulo}}" bibleajax="{{bibleajax}}"></devocional-header>
+    <devocional-card id="mensajecard" header="Mensaje de Dios para mi Hoy" text="{{mensaje}}" correct-text="{{correctMensaje}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.mensaje]]"></devocional-card>
+    <devocional-card id="promesaCard" header="Promesa de Dios para mi Hoy" text="{{promesa}}" correct-text="{{correctPromesa}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.promesa]]"></devocional-card>
+    <devocional-card id="mandamientoCard" header="Mandamiento a Obedecer" text="{{mandamiento}}" correct-text="{{correctMandamiento}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.mandamiento]]"></devocional-card>
+    <devocional-card id="aplicacionCard" header="Aplicacion Personal" text="{{aplicacion}}" correct-text="{{correctAplicacion}}" is-editable="{{isEditable}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.aplicacion]]"></devocional-card>
+    <devocional-card id="textoCard" header="Texto Rhema" text="{{rhema}}" is-editable="{{isEditable}}" correct-text="{{correctRhema}}" is-teacher="{{isTeacher}}" placeholder="[[placeholders.rhema]]"></devocional-card>
   
-  </div>
-  <div class="card-actions" hidden$="[[!isEditable]]">
-    
-    <paper-button class="mainbutton" raised on-tap="delete">
-      
-      <iron-icon icon="delete"></iron-icon>
-      
-      Eliminar
-    </paper-button>
-    
-    
-    
   </div>
 </paper-card>
     <paper-fab
@@ -156,12 +144,17 @@
           editorItem:{
                     type:Object,
                     value:{}
-                  },  
+                  },   
           isNew:{
             type:Boolean,
             notify: true,
             value:true},
           isEditable:{
+            type:Boolean,
+            notify: true,
+            value:false
+          },
+          isTeacher:{
             type:Boolean,
             notify: true,
             value:false
@@ -175,7 +168,18 @@
             notify:true,
             value:''
           },
+          correctMensaje:{
+            type: String,
+            notify:true,
+            value:''
+          },
+
           promesa:{
+            type: String,
+            notify:true,
+            value:''
+          },
+          correctPromesa:{
             type: String,
             notify:true,
             value:''
@@ -185,12 +189,27 @@
             notify:true,
             value:''
           },
+          correctMandamiento:{
+            type: String,
+            notify:true,
+            value:''
+          },
           aplicacion:{
             type: String,
             notify:true,
             value:''
           },
+          correctAplicacion:{
+            type: String,
+            notify:true,
+            value:''
+          },
           rhema:{
+            type: String,
+            notify:true,
+            value:''
+          },
+          correctRhema:{
             type: String,
             notify:true,
             value:''
@@ -220,7 +239,16 @@
           },
           user:{
             type:Object
+          },
+          placeholders:{
+            type:Object,
+            value:{mensaje:'Aqui van las Correcciones.',
+            promesa:'Aqui van las Correcciones',
+            mandamiento:'Aqui van las Correcciones',
+            aplicacion:'Aqui van las Correcciones',
+            rhema:'Aqui van las Correcciones'
           }
+        },
           
         };
         }
@@ -240,6 +268,14 @@
         this.aplicacion=this.editorItem.aplicacion;
         this.rhema=this.editorItem.rhema;
         this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+this.editorItem.year+this.editorItem.month+this.editorItem.day;
+       
+        this.correctMensaje=item.correctMensaje;
+        this.correctPromesa=item.correctPromesa;
+        this.correctMandamiento=item.correctMandamiento;
+        this.correctAplicacion=item.correctAplicacion;
+        this.correctRhema=item.correctRhema;
+
+        this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+this.editableDevocional.year+this.editableDevocional.month+this.editableDevocional.day;
         
       }
       createItem(item){
@@ -257,7 +293,8 @@
           } 
 
           var date = dd + '/' + mm + '/' + yyyy;
-          
+          this.date=date;
+        if(item && item.day){
           var day=item.day;
         var month=item.month;
         if(day<10) {
@@ -268,7 +305,7 @@
             month = '0'+month;
           }
 
-        this.set('editorItem',item);
+         this.set('editorItem',item);
         this.date=day+"/"+month+"/"+item.year;
         console.log(date);
         console.log(this.date);
@@ -284,6 +321,11 @@
         this.mandamiento="";
         this.aplicacion="";
         this.rhema="";
+        this.correctMensaje="";
+        this.correctPromesa="";
+        this.correctMandamiento="";
+        this.correctAplicacion="";
+        this.correctRhema="";
           this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+ yyyy + mm + dd;
         
         }else{
@@ -298,8 +340,26 @@
         this.aplicacion=item.aplicacion;
         this.rhema=item.rhema;
         this.editableDevocionalId="/test2/"+this.user.uid+"/cuadernoDevocional/"+item.year+month+day;
-        
+               
         }
+        }else{
+          this.editorItem.year=yyyy;
+        this.editorItem.month=today.getMonth()+1;
+        this.editorItem.day=today.getDate();
+        this.libro=0;
+        this.capitulo=1;
+        this.mensaje="";
+        this.promesa="";
+        this.mandamiento="";
+        this.aplicacion="";
+        this.rhema="";
+        this.correctMensaje="";
+        this.correctPromesa="";
+        this.correctMandamiento="";
+        this.correctAplicacion="";
+        this.correctRhema="";
+        } 
+        
         
       }
 
@@ -339,7 +399,6 @@
       }
       save(){
         this.isEditable=false;
-        //this.editableDevocional=this.editorItem;
         var day=this.editorItem.day;
         var month=this.editorItem.month;
         if(day<10) {
@@ -349,10 +408,16 @@
           if(month<10) {
             month = '0'+month;
           }
-        var key=this.editorItem.year+month+day;
+          var key=this.editorItem.year+month+day;
         var path=this.editableDevocionalId="/devocional/"+this.user.uid+"/cuadernoDevocional";
         this.editableDevocionalId=path;
-        this.editableDevocional.mensaje=this.mensaje;
+          this.editableDevocional.correctMensaje=this.correctMensaje;
+        this.editableDevocional.correctPromesa=this.correctPromesa;
+        this.editableDevocional.correctMandamiento=this.correctMandamiento;
+        this.editableDevocional.correctAplicacion=this.correctAplicacion;
+        this.editableDevocional.correctRhema=this.correctRhema;
+        
+          this.editableDevocional.mensaje=this.mensaje;
         this.editableDevocional.promesa=this.promesa;
         this.editableDevocional.mandamiento=this.mandamiento;
         this.editableDevocional.aplicacion=this.aplicacion;
@@ -362,8 +427,21 @@
         this.editableDevocional.year=this.editorItem.year;
         this.editableDevocional.month=this.editorItem.month;
         this.editableDevocional.day=this.editorItem.day;
-        //this.editableDevocional=this.editorItem;
-        //console.log(this.editableDevocional);
+        if(!this.editableDevocional.correctMensaje){
+          this.editableDevocional.correctMensaje="";
+        }
+        if(!this.editableDevocional.correctPromesa){
+          this.editableDevocional.correctPromesa="";
+        }
+        if(!this.editableDevocional.correctMandamiento){
+          this.editableDevocional.correctMandamiento="";
+        }
+        if(!this.editableDevocional.correctAplicacion){
+          this.editableDevocional.correctAplicacion="";
+        }
+        if(!this.editableDevocional.correctRhema){
+          this.editableDevocional.correctRhema="";
+        }
         this.$.document.saveValue(path,key);
         return this.editableDevocional;
       }
