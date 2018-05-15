@@ -46,6 +46,7 @@
             <div class="card-content" on-tap="showButtons" >
                 <div class="main-header">
                     <h1 id="header"><strong>[[getDate(item)]]  [[computeBook(item)]] [[item.capitulo]]</strong></h1>
+                    <iron-icon icon="assignment-turned-in" hidden="{{hideCorrected(item)}}"></iron-icon>
                 </div>
             </div> 
             <iron-collapse id="buttonContainer" style="width:100%;" opened="{{isSelected}}">
@@ -156,6 +157,13 @@
              console.log("delete "+ this.date );
              const event = new CustomEvent('delete', { bubbles: true, composed: true});
              this.dispatchEvent(event);
+         }
+         hideCorrected(item){
+            if((item.correctMensaje && item.correctMensaje!=="") ||( item.correctPromesa && item.correctPromesa!=="") ||( item.correctMandamiento && item.correctMandamiento!=="" )||( item.correctAplicacion && item.correctAplicacion!=="") || (item.correctRhema && item.correctRhema!=="")){
+            	return false;
+            }else{
+            	return true;
+            }
          }
          computeBook(item){
              if(this.bibleStruct.length>1){
