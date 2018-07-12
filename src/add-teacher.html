@@ -126,7 +126,8 @@
         addTeacher(){
         	var alumn= {email:this.user.email,id: this.user.id};
             var key= this.user.email.split("@")[0];;
-            var teacher=this.text.split("@")[0];
+            var teacher=(this.text.split("@")[0]).toLowerCase();
+            console.log(teacher);
             var path= 'teacher/'+teacher+'/alumns';
             var today = new Date();
             var dd = today.getDate();
@@ -140,7 +141,8 @@
             if(mm<10) {
                 mm = '0'+mm
             } 
-            console.log(this.user);
+            //console.log(this.user);
+            console.log("hola");
             var date = mm + '/' + dd + '/' + yyyy;
             this.data.uid=this.user.uid;
             this.data.email=this.user.email;

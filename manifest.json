@@ -3,11 +3,7 @@
   "short_name": "Devocional",
   "description": "Cuaderno Devocional Rhema",
   "icons": [
-    {
-      "src": "images/manifest/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-  },
+    
   {
       "src": "images/manifest/android-chrome-512x512.png",
       "sizes": "512x512",
